@@ -8,11 +8,16 @@
     "start": "next start",
     "lint": "next lint"
   },
+  "prisma": {
+    "seed": "ts-node -P tsconfig-seed.json -r tsconfig-paths/register --transpileOnly prisma/seed.ts"
+  },
   "dependencies": {
+    "@prisma/client": "^5.2.0",
     "@types/node": "20.6.0",
     "@types/react": "18.2.21",
     "@types/react-dom": "18.2.7",
     "autoprefixer": "10.4.15",
+    "date-fns": "^2.30.0",
     "eslint": "8.49.0",
     "eslint-config-next": "13.4.19",
     "next": "13.4.19",
@@ -26,6 +31,8 @@
     "@typescript-eslint/eslint-plugin": "^6.6.0",
     "eslint-config-prettier": "^9.0.0",
     "prettier": "^3.0.3",
-    "prettier-plugin-tailwindcss": "^0.5.4"
+    "prettier-plugin-tailwindcss": "^0.5.4",
+    "prisma": "^5.2.0",
+    "ts-node": "^10.9.1"
   }
 }

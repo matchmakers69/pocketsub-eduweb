@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String         @id @unique
+  name          String
+  email         String         @unique
+  subscriptions Subscription[]
+}
+
+enum SUBSCRIPTION_CURRENCY {
+  PLN
+  EUR
+  GBP
+}
+
+enum SUBSCRIPTION_BILLING_PERIOD {
+  MONTHLY
+  YEARLY
+}
+
+enum SUBSCRIPTION_STATUS {
+  ACTIVE
+  NOT_ACTIVE
+}
+
+model Subscription {
+  id                String                      @id @default(uuid())
+  name              String
+  price             Float
+  currency          SUBSCRIPTION_CURRENCY       @default(GBP)
+  start_date        DateTime                    @db.Date
+  end_date          DateTime?                   @db.Date
+  billing_period    SUBSCRIPTION_BILLING_PERIOD @default(MONTHLY)
+  next_payment_date DateTime                    @db.Date
+  category          String
+  avatar_url        String
+  status            SUBSCRIPTION_STATUS         @default(ACTIVE)
+
+  ownerId  String
+  owner    User      @relation(fields: [ownerId], references: [id], onDelete: Cascade)
+  payments Payment[]
+}
+
+enum PAYMENT_STATUS {
+  NOT_PAID
+  PAID
+}
+
+model Payment {
+  id             String         @id @default(uuid())
+  amount         Float
+  due_date       DateTime       @db.Date
+  status         PAYMENT_STATUS @default(NOT_PAID)
+  subscriptionId String?
+  subscription   Subscription?  @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+}
