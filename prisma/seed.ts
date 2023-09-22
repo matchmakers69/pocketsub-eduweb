@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { prisma } from "@/lib/db";
+import { hash } from "bcrypt";
 import {
   PAYMENT_STATUS,
   SUBSCRIPTION_BILLING_PERIOD,
@@ -35,9 +36,10 @@ function nextPaymentMonthGenerator(
 }
 
 async function main() {
+  const password = await hash("Wieslawa698@@", 12);
   const user = await prisma.user.upsert({
     where: {
-      email: "przemek.lewtak@gmai.com",
+      email: "przemek.lewtak@gmail.com",
     },
     update: {
       subscriptions: {
@@ -96,9 +98,10 @@ async function main() {
       },
     },
     create: {
-      id: "test123",
-      email: "przemek.lewtak@gmai.com",
+      id: "przemek458940",
+      email: "przemek.lewtak@gmail.com",
       name: "Przemek Lewtak",
+      password,
       subscriptions: {
         create: [
           {
