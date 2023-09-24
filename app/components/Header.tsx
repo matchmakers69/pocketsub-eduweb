@@ -43,7 +43,18 @@ export default function Header() {
                 </Link>
               </li>
 
-              <li className="cursor-pointer" onClick={() => signOut()}>
+              <li>
+                <button
+                  onClick={() =>
+                    signOut({
+                      redirect: true,
+                      callbackUrl: `${window.location.origin}/login`,
+                    })
+                  }
+                  className="bg-red-700 text-white"
+                >
+                  Sign out
+                </button>
                 Logout
               </li>
             </>

@@ -23,11 +23,15 @@ export default function useLogin() {
       setLoading(false);
 
       if (!response?.error) {
+        router.refresh(); // TODO check if that works and what is its purpose
         router.push(callbackUrl);
       } else {
+        // Posibly show toast message
+        console.log("Something went wrong with your login!");
         setError(response.error);
       }
     } catch (err: any) {
+      console.error("Login failed");
       setLoading(false);
       setError(err);
     }

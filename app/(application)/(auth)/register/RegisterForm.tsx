@@ -2,37 +2,48 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import useLogin from "./hooks/useLogin";
-import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
-import { loginSchema } from "./schema/loginSchema";
+import { registerSchema } from "./schema/registerSchema";
+import useRegister from "./hooks/useRegister";
 
 type TFormValues = {
+  name: string;
   email: string;
   password: string;
 };
 
-function LoginForm() {
-  const { loginUser, loading } = useLogin();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
-
+function RegisterForm() {
+  const { registerUser, loading } = useRegister();
   const {
     register,
     handleSubmit,
     formState: { isValid, isDirty, isSubmitting },
   } = useForm<TFormValues>({
     mode: "onChange",
-    resolver: yupResolver(loginSchema),
+    resolver: yupResolver(registerSchema),
+    defaultValues: {
+      name: "",
+      email: "",
+      password: "",
+    },
   });
 
   const handleFormSubmit: SubmitHandler<TFormValues> = async (data) => {
-    await loginUser(data.email, data.password);
+    await registerUser(data.name, data.email, data.password);
   };
 
   return (
     <>
       <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+        <div className="mb-5 flex flex-col gap-1">
+          <label htmlFor="name">Name</label>
+          <input
+            id="name"
+            type="text"
+            placeholder="Name"
+            className="h-11 rounded-md border px-4"
+            {...register("name")}
+          />
+        </div>
         <div className="mb-5 flex flex-col gap-1">
           <label htmlFor="email">Email</label>
           <input
@@ -40,7 +51,7 @@ function LoginForm() {
             type="email"
             placeholder="Email"
             className="h-11 rounded-md border px-4"
-            {...register("email", { required: true })}
+            {...register("email")}
           />
         </div>
 
@@ -51,7 +62,7 @@ function LoginForm() {
             type="password"
             placeholder="Password"
             className="h-11 rounded-md border px-4"
-            {...register("password", { required: true })}
+            {...register("password")}
           />
         </div>
         <div className="flex justify-end gap-1">
@@ -60,31 +71,12 @@ function LoginForm() {
             className="h-11 rounded-md bg-black px-6 text-white"
             type="submit"
           >
-            {loading ? "Loading" : "SignIn"}
+            {loading ? "Loading" : "SignUp"}
           </button>
-        </div>
-        <div className="mb-3">
-          <a
-            role="button"
-            className=""
-            onClick={() => signIn("google", { callbackUrl })}
-          >
-            Login with Google
-          </a>
-        </div>
-
-        <div className="mb-3">
-          <a
-            role="button"
-            className=""
-            onClick={() => signIn("github", { callbackUrl })}
-          >
-            Login with Github
-          </a>
         </div>
       </form>
     </>
   );
 }
 
-export default LoginForm;
+export default RegisterForm;

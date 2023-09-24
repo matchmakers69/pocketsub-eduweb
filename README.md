@@ -11,21 +11,8 @@ https://medium.com/ascentic-technology/authentication-with-next-js-13-and-next-a
 https://github.com/tkssharma/t3-stack-monorepo/blob/develop/apps/nextjs-prisma-auth/src/app/register/register-form.tsx
 
 https://www.youtube.com/watch?v=2kgqPvs0j_I - Another tutorial how to create login with NextAuth
-
+https://www.youtube.com/watch?v=bicCg4GxOP8 - good tutorial to register and login
 https://www.youtube.com/watch?v=X-idRZaTE48 - create multistep form react hook form with Next.js
-
-model User {
-id String @id @unique @default(uuid())
-name String
-email String @unique
-verified Boolean? @default(false)
-image String?
-hashedPassword String?
-createdAt DateTime? @default(now())
-updatedAt DateTime @updatedAt
-subscriptions Subscription[]
-Account Account?
-}
 
 Prisma commands
 npx prisma db push - updated database
