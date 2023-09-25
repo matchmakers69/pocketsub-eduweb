@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
 export default function useLogin() {
@@ -23,11 +24,11 @@ export default function useLogin() {
       setLoading(false);
 
       if (!response?.error) {
-        router.refresh(); // TODO check if that works and what is its purpose
+        router.refresh();
+        toast.success("Logged In");
         router.push(callbackUrl);
       } else {
-        // Posibly show toast message
-        console.log("Something went wrong with your login!");
+        toast.error("Something went wrong");
         setError(response.error);
       }
     } catch (err: any) {
