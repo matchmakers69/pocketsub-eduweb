@@ -3,11 +3,15 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useLogin from "./hooks/useLogin";
+import { AiFillGithub } from "react-icons/ai";
 import { signIn } from "next-auth/react";
+import { FcGoogle } from "react-icons/fc";
 import { useSearchParams } from "next/navigation";
 import { loginSchema } from "./schema/loginSchema";
+import Input from "@/app/components/Input";
+import Button from "@/app/components/Button";
 
-type TFormValues = {
+type TLoginFormValues = {
   email: string;
   password: string;
 };
@@ -20,13 +24,17 @@ function LoginForm() {
   const {
     register,
     handleSubmit,
-    formState: { isValid, isDirty, isSubmitting },
-  } = useForm<TFormValues>({
+    formState: { errors, isValid, isDirty, isSubmitting },
+  } = useForm<TLoginFormValues>({
     mode: "onChange",
     resolver: yupResolver(loginSchema),
+    defaultValues: {
+      email: "",
+      password: "",
+    },
   });
 
-  const handleFormSubmit: SubmitHandler<TFormValues> = async (data) => {
+  const handleFormSubmit: SubmitHandler<TLoginFormValues> = async (data) => {
     await loginUser(data.email, data.password);
   };
 
@@ -35,52 +43,53 @@ function LoginForm() {
       <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="mb-5 flex flex-col gap-1">
           <label htmlFor="email">Email</label>
-          <input
+          <Input<TLoginFormValues>
+            name="email"
             id="email"
+            label="Email"
+            register={register}
+            errors={errors}
             type="email"
-            placeholder="Email"
-            className="h-11 rounded-md border px-4"
-            {...register("email", { required: true })}
+            required
           />
         </div>
 
         <div className="mb-5 flex flex-col gap-1">
-          <label htmlFor="password">Password</label>
-          <input
+          <Input<TLoginFormValues>
+            name="password"
             id="password"
+            label="Password"
+            register={register}
+            errors={errors}
+            required
             type="password"
-            placeholder="Password"
-            className="h-11 rounded-md border px-4"
-            {...register("password", { required: true })}
           />
         </div>
-        <div className="flex justify-end gap-1">
-          <button
+        <div className="mb-4 flex justify-end gap-1">
+          <Button
             disabled={!isDirty || !isValid || isSubmitting}
-            className="h-11 rounded-md bg-black px-6 text-white"
             type="submit"
-          >
-            {loading ? "Loading" : "SignIn"}
-          </button>
+            label={loading ? "Loading" : "SignIn"}
+          />
         </div>
-        <div className="mb-3">
-          <a
-            role="button"
-            className=""
+        <div className="mb-4">
+          <Button
+            outline
+            label="Continue with Google"
+            icon={FcGoogle}
             onClick={() => signIn("google", { callbackUrl })}
-          >
-            Login with Google
-          </a>
+            type="button"
+          />
         </div>
 
-        <div className="mb-3">
-          <a
-            role="button"
-            className=""
+        <div>
+          <Button
+            outline
+            label="Continue with Github"
+            icon={AiFillGithub}
             onClick={() => signIn("github", { callbackUrl })}
-          >
-            Login with Github
-          </a>
+            type="button"
+          />
         </div>
       </form>
     </>
