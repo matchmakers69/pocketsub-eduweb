@@ -7,6 +7,6 @@
   ],
   "rules": {
     "prefer-const": "error",
-    "@typescript-eslint/no-explicit-any": 1
+    "@typescript-eslint/no-explicit-any": 0
   }
 }
