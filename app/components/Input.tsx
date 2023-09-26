@@ -48,7 +48,7 @@ const Input = <TFormValues extends Record<string, unknown>>({
         className={`peer
             w-full
             rounded-md
-            border-[1px]
+            border
             bg-white
             p-4
            pt-5

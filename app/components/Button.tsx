@@ -32,7 +32,7 @@ const Button: FC<ButtoProps> = ({
     relative
     w-full
     rounded-lg
-    border-[1px]
+    border
     transition
     hover:opacity-80
     disabled:cursor-not-allowed

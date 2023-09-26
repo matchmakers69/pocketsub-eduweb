@@ -4,8 +4,10 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./schema/registerSchema";
 import useRegister from "./hooks/useRegister";
+import Input from "@/app/components/Input";
+import Button from "@/app/components/Button";
 
-type TFormValues = {
+type TRegistrationFormValues = {
   name: string;
   email: string;
   password: string;
@@ -16,8 +18,8 @@ function RegisterForm() {
   const {
     register,
     handleSubmit,
-    formState: { isValid, isDirty, isSubmitting },
-  } = useForm<TFormValues>({
+    formState: { errors, isValid, isDirty, isSubmitting },
+  } = useForm<TRegistrationFormValues>({
     mode: "onChange",
     resolver: yupResolver(registerSchema),
     defaultValues: {
@@ -27,7 +29,9 @@ function RegisterForm() {
     },
   });
 
-  const handleFormSubmit: SubmitHandler<TFormValues> = async (data) => {
+  const handleFormSubmit: SubmitHandler<TRegistrationFormValues> = async (
+    data,
+  ) => {
     await registerUser(data.name, data.email, data.password);
   };
 
@@ -35,44 +39,46 @@ function RegisterForm() {
     <>
       <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="mb-5 flex flex-col gap-1">
-          <label htmlFor="name">Name</label>
-          <input
+          <Input<TRegistrationFormValues>
+            name="name"
             id="name"
+            label="Name"
+            register={register}
+            errors={errors}
             type="text"
-            placeholder="Name"
-            className="h-11 rounded-md border px-4"
-            {...register("name")}
+            required
           />
         </div>
         <div className="mb-5 flex flex-col gap-1">
-          <label htmlFor="email">Email</label>
-          <input
+          <Input<TRegistrationFormValues>
+            name="email"
             id="email"
+            label="Email"
+            register={register}
+            errors={errors}
             type="email"
-            placeholder="Email"
-            className="h-11 rounded-md border px-4"
-            {...register("email")}
+            required
           />
         </div>
 
         <div className="mb-5 flex flex-col gap-1">
-          <label htmlFor="password">Password</label>
-          <input
+          <Input<TRegistrationFormValues>
+            name="password"
             id="password"
+            label="Password"
+            register={register}
+            errors={errors}
             type="password"
-            placeholder="Password"
-            className="h-11 rounded-md border px-4"
-            {...register("password")}
+            required
           />
         </div>
         <div className="flex justify-end gap-1">
-          <button
+          <Button
+            outline
+            label={loading ? "Loading" : "Sign up"}
             disabled={!isDirty || !isValid || isSubmitting}
-            className="h-11 rounded-md bg-black px-6 text-white"
             type="submit"
-          >
-            {loading ? "Loading" : "SignUp"}
-          </button>
+          />
         </div>
       </form>
     </>
