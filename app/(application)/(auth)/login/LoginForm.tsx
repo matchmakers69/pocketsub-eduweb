@@ -68,7 +68,7 @@ function LoginForm() {
           <Button
             disabled={!isDirty || !isValid || isSubmitting}
             type="submit"
-            label={loading ? "Loading" : "SignIn"}
+            label={loading ? "Loading" : "Sign in"}
           />
         </div>
         <div className="mb-4">

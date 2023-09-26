@@ -74,7 +74,6 @@ function RegisterForm() {
         </div>
         <div className="flex justify-end gap-1">
           <Button
-            outline
             label={loading ? "Loading" : "Sign up"}
             disabled={!isDirty || !isValid || isSubmitting}
             type="submit"
