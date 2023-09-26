@@ -13,6 +13,12 @@ https://github.com/tkssharma/t3-stack-monorepo/blob/develop/apps/nextjs-prisma-a
 https://www.youtube.com/watch?v=2kgqPvs0j_I - Another tutorial how to create login with NextAuth
 https://www.youtube.com/watch?v=bicCg4GxOP8 - good tutorial to register and login
 https://www.youtube.com/watch?v=X-idRZaTE48 - create multistep form react hook form with Next.js
+https://discord.com/channels/440163731704643589/1155869281565810729/1155869281565810729 - link to typa od rejestracji strapi
+https://www.traversymedia.com/modern-javascript-2-0
+
+Prisma Vercel build issues solutions:
+https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue
+https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/vercel-caching-issue#a-custom-postinstall-script
 
 Prisma commands
 npx prisma db push - updated database

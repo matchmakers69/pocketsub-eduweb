@@ -32,17 +32,18 @@ const Button: FC<ButtoProps> = ({
     relative
     w-full
     rounded-lg
+    border-[1px]
     transition
     hover:opacity-80
     disabled:cursor-not-allowed
-    disabled:opacity-70
+    disabled:opacity-40
     ${outline ? "bg-white" : "bg-yellow-500"}
     ${outline ? "border-black" : "bg-yellow-500"}
     ${outline ? "text-black" : "text-white"}
     ${small ? "py-1" : "py-3"}
     ${small ? "text-sm" : "text-md"}
     ${small ? "font-light" : "font-semibold"}
-    ${small ? "border-[1px]" : "border-1"}
+   
   `}
       type={type}
     >

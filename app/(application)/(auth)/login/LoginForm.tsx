@@ -42,7 +42,6 @@ function LoginForm() {
     <>
       <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
         <div className="mb-5 flex flex-col gap-1">
-          <label htmlFor="email">Email</label>
           <Input<TLoginFormValues>
             name="email"
             id="email"
