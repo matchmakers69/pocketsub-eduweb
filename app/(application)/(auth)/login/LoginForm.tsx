@@ -3,13 +3,11 @@
 import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useLogin from "./hooks/useLogin";
-import { AiFillGithub } from "react-icons/ai";
-import { signIn } from "next-auth/react";
-import { FcGoogle } from "react-icons/fc";
-import { useSearchParams } from "next/navigation";
 import { loginSchema } from "./schema/loginSchema";
 import Input from "@/app/components/Input";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/buttons/Button";
+import GoogleSignInButton from "@/app/components/buttons/GoogleSignInButton";
+import GithubSignInButton from "@/app/components/buttons/GithubSignInButton";
 
 type TLoginFormValues = {
   email: string;
@@ -18,8 +16,6 @@ type TLoginFormValues = {
 
 function LoginForm() {
   const { loginUser, loading } = useLogin();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/profile";
 
   const {
     register,
@@ -72,23 +68,11 @@ function LoginForm() {
           />
         </div>
         <div className="mb-4">
-          <Button
-            outline
-            label="Continue with Google"
-            icon={FcGoogle}
-            onClick={() => signIn("google", { callbackUrl })}
-            type="button"
-          />
+          <GoogleSignInButton label="Sign in with Google" />
         </div>
 
         <div>
-          <Button
-            outline
-            label="Continue with Github"
-            icon={AiFillGithub}
-            onClick={() => signIn("github", { callbackUrl })}
-            type="button"
-          />
+          <GithubSignInButton label="Continue with Github" />
         </div>
       </form>
     </>

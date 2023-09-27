@@ -5,7 +5,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { registerSchema } from "./schema/registerSchema";
 import useRegister from "./hooks/useRegister";
 import Input from "@/app/components/Input";
-import Button from "@/app/components/Button";
+import Button from "@/app/components/buttons/Button";
 
 type TRegistrationFormValues = {
   name: string;
