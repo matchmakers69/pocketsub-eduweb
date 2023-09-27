@@ -39,7 +39,7 @@ async function main() {
   const password = await hash("Wieslawa698@@", 12);
   const user = await prisma.user.upsert({
     where: {
-      email: "przemek.lewtak@gmail.com",
+      email: "przemek.lewtak@heywood.co.uk",
     },
     update: {
       subscriptions: {
@@ -98,8 +98,8 @@ async function main() {
       },
     },
     create: {
-      id: "przemek458940",
-      email: "przemek.lewtak@gmail.com",
+      id: "przemek458941",
+      email: "przemek.lewtak@heywood.co.uk",
       name: "Przemek Lewtak",
       password,
       subscriptions: {
