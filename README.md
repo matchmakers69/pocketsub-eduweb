@@ -27,6 +27,8 @@ npx prisma migrate dev --name init - migracja prismy po zmianach
 npx prisma studio - odpalenie bazy danej do podgladu
 npx prisma db seed - to push seeds
 
+npx prisma migrate dev reset > npx prisma migrate reset > npx prisma generate
+
 React-hook-form
 https://hygraph.com/blog/react-hook-form - checkbox with rhf watch
 https://codesandbox.io/s/64042394-react-hook-form-and-material-ui-formcontrol-forked-zvez3?file=/src/App.js - MUI radio buttons

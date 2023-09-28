@@ -53,9 +53,9 @@ export default function Header() {
                   }
                   className="bg-red-700 text-white"
                 >
-                  Sign out
+                 Logout
                 </button>
-                Logout
+                
               </li>
             </>
           )}
