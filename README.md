@@ -35,3 +35,5 @@ https://codesandbox.io/s/64042394-react-hook-form-and-material-ui-formcontrol-fo
 https://www.youtube.com/watch?v=3uEyy_f81r0&t=1s - MUI react-hook-form registration form with Controllers
 
 https://www.youtube.com/watch?v=MazY6XRBLOk - set values with react-hook-form
+https://codesandbox.io/s/hopeful-goldwasser-kmfb01?file=/src/state.js - Multistep form react-hook-form
+https://www.frontendmentor.io/solutions/multistep-form-built-with-nextjs-tailwindcss-and-reacthookform-W4hwhscxuI (https://github.com/waldosmuts/multi-step-form/blob/main/components/Provider.tsx) - well explained with repo

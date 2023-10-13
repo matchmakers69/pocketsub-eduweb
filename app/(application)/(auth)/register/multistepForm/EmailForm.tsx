@@ -1,0 +1,58 @@
+"use client";
+
+import Input from "@/app/components/Input";
+import Button from "@/app/components/buttons/Button";
+import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
+import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+
+type TFormValues = {
+  EmailStep: {
+    email: string;
+  };
+};
+
+function EmailForm() {
+  const { goNext, goPrev, setFormValues, formDataValues, markStepAsCompleted } =
+    useRegistrationFormContext();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<TFormValues>({
+    mode: "onChange",
+    defaultValues: {
+      EmailStep: {
+        email: formDataValues.EmailStep.email,
+      },
+    },
+  });
+
+  const handleSaveEmail: SubmitHandler<TFormValues> = (data) => {
+    setFormValues(data);
+    markStepAsCompleted("email");
+    goNext();
+  };
+
+  return (
+    <form noValidate onSubmit={handleSubmit(handleSaveEmail)}>
+      <div className="mb-5 flex flex-col gap-1">
+        <Input<TFormValues>
+          name="EmailStep.email"
+          id="email"
+          label="Email"
+          register={register}
+          errors={errors as Partial<{ EmailStep: { email: FieldError } }>}
+          type="email"
+          required
+        />
+      </div>
+
+      <div className="flex justify-end gap-4">
+        <Button onClick={goPrev} label={"Back"} type="button" />
+        <Button label={"Next"} type="submit" />
+      </div>
+    </form>
+  );
+}
+
+export default EmailForm;

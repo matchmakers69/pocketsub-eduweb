@@ -4,28 +4,37 @@ import {
   UseFormRegister,
   FieldError,
   Path,
-  DeepMap,
   FieldValues,
+  DeepMap,
 } from "react-hook-form";
 import { BiDollar } from "react-icons/bi";
 import { ErrorMessage } from "@hookform/error-message";
 import FormErrorMessage from "./FormErrorMessage";
+import { DetailedHTMLProps, InputHTMLAttributes } from "react";
 
 type InputType = "text" | "email" | "password" | "number" | "image" | "file";
 
-export type InputProps<TFormValues extends FieldValues> = {
-  name: Path<TFormValues>;
+type InputProps = {
   id: string;
+  name: string;
   label: string;
-  type: InputType;
+  type?: InputType;
+  className?: string;
+} & Omit<
+  DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
+  "size"
+>;
+
+type FormInputProps<T extends FieldValues> = {
+  name: Path<T>;
+  register: UseFormRegister<T>;
+  errors?: Partial<DeepMap<T, FieldError>>;
   disabled?: boolean;
   formatPrice?: boolean;
   required?: boolean;
-  register: UseFormRegister<TFormValues>;
-  errors?: Partial<DeepMap<TFormValues, FieldError>>;
-};
+} & Omit<InputProps, "name">;
 
-const Input = <TFormValues extends Record<string, unknown>>({
+const Input = <T extends Record<string, unknown>>({
   id,
   label,
   name,
@@ -35,7 +44,7 @@ const Input = <TFormValues extends Record<string, unknown>>({
   required,
   register,
   errors,
-}: InputProps<TFormValues>): JSX.Element => {
+}: FormInputProps<T>): JSX.Element => {
   return (
     <div className="relative w-full">
       {formatPrice && (
@@ -86,6 +95,7 @@ const Input = <TFormValues extends Record<string, unknown>>({
       >
         {label}
       </label>
+
       <ErrorMessage
         errors={errors}
         name={name as any}
