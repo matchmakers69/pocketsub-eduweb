@@ -37,3 +37,15 @@ https://www.youtube.com/watch?v=3uEyy_f81r0&t=1s - MUI react-hook-form registrat
 https://www.youtube.com/watch?v=MazY6XRBLOk - set values with react-hook-form
 https://codesandbox.io/s/hopeful-goldwasser-kmfb01?file=/src/state.js - Multistep form react-hook-form
 https://www.frontendmentor.io/solutions/multistep-form-built-with-nextjs-tailwindcss-and-reacthookform-W4hwhscxuI (https://github.com/waldosmuts/multi-step-form/blob/main/components/Provider.tsx) - well explained with repo
+
+https://www.newline.co/fullstack-react-with-typescript#packages - BOOK react app
+
+Dane logowania:
+lewtaldo@wp.pl
+Wieslawa698@@
+
+//Strapi links
+https://egghead.io/lessons/next-js-handle-runtime-errors-in-next-js-13-nested-routes
+https://strapi.io/blog/introducing-the-new-strapi-starter-with-nextjs13-tailwind-and-typescript
+https://strapi.io/blog/next-js-13-whats-new
+https://stackoverflow.com/questions/76294039/nextjs-13-next-auth-authentication-with-strapi-cms - auth Next.js strapi

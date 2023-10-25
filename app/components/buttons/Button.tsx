@@ -1,7 +1,6 @@
 "use client";
 
 import { FC } from "react";
-import { IconType } from "react-icons";
 
 type ButtonType = "button" | "submit";
 
@@ -12,7 +11,8 @@ interface ButtoProps {
   disabled?: boolean;
   outline?: boolean;
   small?: boolean;
-  icon?: IconType;
+  fullWidth?: boolean;
+  iconName?: string;
 }
 
 const Button: FC<ButtoProps> = ({
@@ -22,7 +22,8 @@ const Button: FC<ButtoProps> = ({
   disabled,
   outline,
   small,
-  icon: Icon,
+  iconName,
+  fullWidth,
 }) => {
   return (
     <button
@@ -30,33 +31,26 @@ const Button: FC<ButtoProps> = ({
       disabled={disabled}
       className={`
     relative
-    w-full
+    ${fullWidth && "w-full"}
     rounded-lg
     border
     transition
     hover:opacity-80
     disabled:cursor-not-allowed
     disabled:opacity-40
-    ${outline ? "bg-white" : "bg-yellow-500"}
-    ${outline ? "border-black" : "bg-yellow-500"}
+    ${outline ? "bg-white" : "bg-zinc-950"}
+    ${outline ? "border-black" : "bg-zinc-950"}
     ${outline ? "text-black" : "text-white"}
     ${small ? "py-1" : "py-3"}
     ${small ? "text-sm" : "text-md"}
-    ${small ? "font-light" : "font-semibold"}
+    ${small ? "font-light" : "font-medium"}
+    ${iconName ? "pl-4" : "pl-6"}
+    ${iconName ? "pr-6" : "pr-8"}
    
   `}
       type={type}
     >
-      {Icon && (
-        <Icon
-          size={24}
-          className="
-            absolute
-            left-4
-            top-3
-          "
-        />
-      )}
+      {iconName && <i className={`ri-${iconName}`} />}
       {label}
     </button>
   );

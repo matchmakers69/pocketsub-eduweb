@@ -2,8 +2,10 @@
 
 import Input from "@/app/components/Input";
 import Button from "@/app/components/buttons/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { nameSchema } from "./schema/nameSchema";
 
 type TFormValues = {
   UsernameStep: {
@@ -17,9 +19,10 @@ function NameForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isSubmitting, isValid },
   } = useForm<TFormValues>({
     mode: "onChange",
+    resolver: yupResolver(nameSchema),
     defaultValues: {
       UsernameStep: {
         name: formDataValues.UsernameStep.name,
@@ -48,7 +51,11 @@ function NameForm() {
       </div>
 
       <div className="flex justify-end gap-1">
-        <Button label={"Next"} type="submit" />
+        <Button
+          label={"Next"}
+          type="submit"
+          disabled={!isDirty || !isValid || isSubmitting}
+        />
       </div>
     </form>
   );

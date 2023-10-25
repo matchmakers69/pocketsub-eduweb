@@ -4,6 +4,7 @@ import Input from "@/app/components/Input";
 import Button from "@/app/components/buttons/Button";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import useRegister from "../hooks/useRegister";
 
 type TFormValues = {
   PasswordStep: {
@@ -12,12 +13,13 @@ type TFormValues = {
 };
 
 function PasswordForm() {
+  const { loading } = useRegister();
   const { goPrev, setFormValues, formDataValues, markStepAsCompleted } =
     useRegistrationFormContext();
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isSubmitting, isValid },
   } = useForm<TFormValues>({
     mode: "onChange",
     defaultValues: {
@@ -48,7 +50,11 @@ function PasswordForm() {
 
       <div className="flex justify-end gap-4">
         <Button onClick={goPrev} label={"Back"} type="button" />
-        <Button label={"Register"} type="submit" />
+        <Button
+          label={loading ? "Loading" : "Register"}
+          type="submit"
+          disabled={!isDirty || !isValid || isSubmitting}
+        />
       </div>
     </form>
   );

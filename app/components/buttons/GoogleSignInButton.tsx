@@ -1,6 +1,5 @@
 import { signIn } from "next-auth/react";
 import Button from "./Button";
-import { FcGoogle } from "react-icons/fc";
 import { useSearchParams } from "next/navigation";
 
 type GoogleSignInButtonProps = {
@@ -15,7 +14,7 @@ function GoogleSignInButton({ label }: GoogleSignInButtonProps) {
     <Button
       outline
       label={label}
-      icon={FcGoogle}
+      iconName="google-fill"
       onClick={loginWithGoogle}
       type="button"
     />

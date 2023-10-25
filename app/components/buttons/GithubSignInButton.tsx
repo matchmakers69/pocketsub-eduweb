@@ -1,8 +1,6 @@
 import { signIn } from "next-auth/react";
 import Button from "./Button";
 import { useSearchParams } from "next/navigation";
-import { AiFillGithub } from "react-icons/ai";
-
 type GithubSignInButtonProps = {
   label: string;
 };
@@ -15,7 +13,7 @@ function GithubSignInButton({ label }: GithubSignInButtonProps) {
     <Button
       outline
       label={label}
-      icon={AiFillGithub}
+      iconName="github-fill"
       onClick={loginWithGithub}
       type="button"
     />

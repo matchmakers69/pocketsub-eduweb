@@ -1,6 +1,5 @@
 "use client";
 
-import { AiOutlineMenu } from "react-icons/ai";
 import { useCallback, useState } from "react";
 import MenuItem from "./MenuItem";
 import Avatar from "./Avatar";
@@ -33,7 +32,7 @@ function UserMenu({ currentUser }: UserMenuProps) {
           className="flex cursor-pointer flex-row items-center gap-4 rounded-full border-[1px] border-neutral-200 p-8 transition hover:shadow-md md:px-2 md:py-1"
           onClick={handleToggleDropDownMenu}
         >
-          <AiOutlineMenu />
+          <i className="ri-menu-line"></i>
           <div className="hidden md:block">
             <Avatar />
           </div>

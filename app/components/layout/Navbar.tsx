@@ -15,7 +15,7 @@ function Navbar({ currentUser }: NavbarProps) {
       <div className="border-b-[1px] py-4">
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
-            <Logo />
+            <Logo width={60} height={60} />
             <UserMenu currentUser={currentUser} />
           </div>
         </Container>

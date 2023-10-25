@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import {
@@ -60,7 +59,7 @@ export default function RegistrationFormProvider({ children }: BaseProps) {
   const [completedSteps, setCompletedSteps] = useState<string[]>([]);
   const [formDataValues, setFormDataValues] =
     useState<TFormDataValues>(FormValues);
-  const { registerUser, loading } = useRegister();
+  const { registerUser } = useRegister();
 
   const currentStepId = stepOrder[currentStepIndex];
 

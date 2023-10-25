@@ -1,5 +1,6 @@
 import SessionProvider from "./components/providers/SessionProvider";
 import { Nunito } from "next/font/google";
+import "remixicon/fonts/remixicon.css";
 import "./globals.css";
 import type { Metadata } from "next";
 import ClientOnly from "./components/ClientOnly";

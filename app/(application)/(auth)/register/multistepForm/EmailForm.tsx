@@ -2,8 +2,10 @@
 
 import Input from "@/app/components/Input";
 import Button from "@/app/components/buttons/Button";
+import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
 import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { emailSchema } from "./schema/emailSchema";
 
 type TFormValues = {
   EmailStep: {
@@ -17,8 +19,9 @@ function EmailForm() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isDirty, isSubmitting, isValid },
   } = useForm<TFormValues>({
+    resolver: yupResolver(emailSchema),
     mode: "onChange",
     defaultValues: {
       EmailStep: {
@@ -49,7 +52,11 @@ function EmailForm() {
 
       <div className="flex justify-end gap-4">
         <Button onClick={goPrev} label={"Back"} type="button" />
-        <Button label={"Next"} type="submit" />
+        <Button
+          label={"Next"}
+          type="submit"
+          disabled={!isDirty || !isValid || isSubmitting}
+        />
       </div>
     </form>
   );

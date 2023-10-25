@@ -7,7 +7,6 @@ import {
   FieldValues,
   DeepMap,
 } from "react-hook-form";
-import { BiDollar } from "react-icons/bi";
 import { ErrorMessage } from "@hookform/error-message";
 import FormErrorMessage from "./FormErrorMessage";
 import { DetailedHTMLProps, InputHTMLAttributes } from "react";
@@ -20,6 +19,7 @@ type InputProps = {
   label: string;
   type?: InputType;
   className?: string;
+  iconName?: string;
 } & Omit<
   DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>,
   "size"
@@ -44,15 +44,11 @@ const Input = <T extends Record<string, unknown>>({
   required,
   register,
   errors,
+  iconName,
 }: FormInputProps<T>): JSX.Element => {
   return (
     <div className="relative w-full">
-      {formatPrice && (
-        <BiDollar
-          className="absolute left-2 top-5 text-neutral-700"
-          size={24}
-        />
-      )}
+      {formatPrice && <i className={`ri-${iconName}`} />}
       <input
         className={`peer
             w-full
