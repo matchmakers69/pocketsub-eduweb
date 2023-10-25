@@ -47,7 +47,7 @@ export default async function ApplicationLayout({
             />
           </nav>
         </div>
-        <AppUserButton username={user?.name ?? "username"} />
+        <AppUserButton username={user?.name ?? "Logged out"} />
       </aside>
       <main className="max-h-screen grow overflow-hidden bg-zinc-200">
         {children}

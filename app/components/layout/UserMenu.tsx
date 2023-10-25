@@ -7,8 +7,10 @@ import { SafeUser } from "@/service/api/types";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
 
+type PartialSafeUser = Partial<SafeUser>;
+
 interface UserMenuProps {
-  currentUser?: SafeUser | null;
+  currentUser?: PartialSafeUser | null;
 }
 
 function UserMenu({ currentUser }: UserMenuProps) {

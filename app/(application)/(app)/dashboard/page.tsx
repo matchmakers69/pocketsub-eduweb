@@ -1,3 +1,11 @@
+import AppContentHeader from "@/app/components/layout/AppContentHeader";
+
 export default function DashboardPage() {
-  return <main className="mx-4 px-0 text-center">Hello Dashboard</main>;
+  return (
+    <section className="h-full p-8">
+      {/* TOP HEADER WITH BUTTONS */}
+      <AppContentHeader title="Dashboard" />
+      {/* CONTENT */}
+    </section>
+  );
 }

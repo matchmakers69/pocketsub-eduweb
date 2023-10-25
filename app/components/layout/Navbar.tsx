@@ -4,6 +4,7 @@ import { SafeUser } from "@/service/api/types";
 import Container from "./Container";
 import Logo from "./Logo";
 import UserMenu from "./UserMenu";
+import Link from "next/link";
 
 interface NavbarProps {
   currentUser?: SafeUser | null;
@@ -15,7 +16,9 @@ function Navbar({ currentUser }: NavbarProps) {
       <div className="border-b-[1px] py-4">
         <Container>
           <div className="flex flex-row items-center justify-between gap-3 md:gap-0">
-            <Logo width={60} height={60} />
+            <Link href={"/"}>
+              <Logo width={50} height={50} />
+            </Link>
             <UserMenu currentUser={currentUser} />
           </div>
         </Container>

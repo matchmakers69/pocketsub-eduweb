@@ -1,6 +1,5 @@
 import Link from "next/link";
 import Image from "next/image";
-import heroImg from "../../public/assets/hero_mock.png";
 
 export default function HomePage() {
   return (
@@ -19,7 +18,17 @@ export default function HomePage() {
         >
           Get Pocketsub
         </Link>
-        <Image src={heroImg} alt="Hero image" className="mx-auto mt-10 px-4" />
+        <div className="mx-auto mt-10 max-w-[960px] px-4">
+          <Image
+            src="/assets/hero_mock.png"
+            alt="Hero image"
+            width={0}
+            height={0}
+            sizes="100vw"
+            priority
+            className="mx-auto h-auto w-full"
+          />
+        </div>
       </section>
       <section className="mx-auto max-w-7xl">
         <p className="mt-20 text-center text-xs font-bold uppercase tracking-[2.4px] text-zinc-500">

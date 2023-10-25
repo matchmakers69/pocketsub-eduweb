@@ -8,7 +8,7 @@ import {
   useState,
 } from "react";
 import { BaseProps } from "../types/BaseProps";
-import useRegister from "../(application)/(auth)/register/hooks/useRegister";
+import useRegister from "../(auth)/register/hooks/useRegister";
 
 type TFormDataValues = {
   UsernameStep: {

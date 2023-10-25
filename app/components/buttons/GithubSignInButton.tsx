@@ -16,6 +16,7 @@ function GithubSignInButton({ label }: GithubSignInButtonProps) {
       iconName="github-fill"
       onClick={loginWithGithub}
       type="button"
+      fullWidth
     />
   );
 }

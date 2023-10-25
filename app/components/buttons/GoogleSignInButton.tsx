@@ -17,6 +17,7 @@ function GoogleSignInButton({ label }: GoogleSignInButtonProps) {
       iconName="google-fill"
       onClick={loginWithGoogle}
       type="button"
+      fullWidth
     />
   );
 }

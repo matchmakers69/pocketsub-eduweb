@@ -2,7 +2,7 @@ import getCurrentUser from "../actions/getCurrentUser";
 import ClientOnly from "../components/ClientOnly";
 import Navbar from "../components/layout/Navbar";
 
-export default async function RootLayout({
+export default async function MarketingLayout({
   children,
 }: {
   children: React.ReactNode;
