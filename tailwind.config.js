@@ -8,6 +8,15 @@ const config = {
   ],
   theme: {
     extend: {
+      container: {
+        padding: {
+          DEFAULT: "1rem",
+          sm: "2rem",
+          lg: "4rem",
+          xl: "5rem",
+          "2xl": "6rem",
+        },
+      },
       keyframes: {
         slideDownAndFade: {
           from: { opacity: 0, transform: "translateY(-2px)" },

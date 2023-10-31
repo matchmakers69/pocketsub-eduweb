@@ -45,6 +45,11 @@ export default async function ApplicationLayout({
               iconName="file-text"
               text={"Subscriptions"}
             />
+            <AppNavLink
+              href={"/todos"}
+              iconName="calendar-todo"
+              text={"Todos"}
+            />
           </nav>
         </div>
         <AppUserButton username={user?.name ?? "Logged out"} />

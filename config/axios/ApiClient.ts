@@ -1,13 +1,13 @@
 import axiosClient, { AxiosInstance } from "axios";
 
-const registerApi: AxiosInstance = axiosClient.create({
+const clientApi: AxiosInstance = axiosClient.create({
   baseURL: "/api",
   headers: {
     Accept: "application/json",
   },
 });
 
-registerApi.interceptors.response.use(
+clientApi.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response.status === 401) {
@@ -16,4 +16,4 @@ registerApi.interceptors.response.use(
   },
 );
 
-export default registerApi;
+export default clientApi;
