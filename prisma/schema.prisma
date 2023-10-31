@@ -111,7 +111,6 @@ model Payment {
 }
 
 model Todo {
-  userId    String
   id        String   @id @default(uuid())
   title     String
   complete  Boolean
