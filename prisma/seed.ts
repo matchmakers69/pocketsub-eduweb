@@ -39,7 +39,7 @@ async function main() {
   const password = await hash("Wieslawa698@@", 12);
   const user = await prisma.user.upsert({
     where: {
-      id: "clo3fl7g00000fn70clgy3ie0",
+      id: "przemek458941",
     },
     update: {
       subscriptions: {
