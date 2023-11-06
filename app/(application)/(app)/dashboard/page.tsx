@@ -3,7 +3,6 @@ import CategoryBreakdown from "@/app/components/dashboard/CategoryBreakdown";
 import Stats from "@/app/components/dashboard/Stats";
 import AppContentHeader from "@/app/components/layout/AppContentHeader";
 import { format } from "date-fns";
-import { tr } from "date-fns/locale";
 import Image from "next/image";
 
 export default async function DashboardPage() {
@@ -27,11 +26,21 @@ export default async function DashboardPage() {
               <table className="min-w-full">
                 <thead>
                   <tr>
-                    <th>Name</th>
-                    <th>Category</th>
-                    <th>Billing period</th>
-                    <th>Next payment</th>
-                    <th>Cost</th>
+                    <th className="sticky top-0 border-b border-zinc-300 bg-zinc-50 bg-opacity-75 py-2 pl-6 pr-3 text-left text-sm font-light text-zinc-400 backdrop-blur backdrop-filter">
+                      Name
+                    </th>
+                    <th className="sticky top-0 border-b border-zinc-300 bg-zinc-50 bg-opacity-75 py-2 text-left text-sm font-light text-zinc-400 backdrop-blur backdrop-filter">
+                      Category
+                    </th>
+                    <th className="sticky top-0 border-b border-zinc-300 bg-zinc-50 bg-opacity-75 py-2 text-left text-sm font-light text-zinc-400 backdrop-blur backdrop-filter">
+                      Billing period
+                    </th>
+                    <th className="sticky top-0 border-b border-zinc-300 bg-zinc-50 bg-opacity-75 py-2 text-left text-sm font-light text-zinc-400 backdrop-blur backdrop-filter">
+                      Next payment
+                    </th>
+                    <th className="text-text-right sticky top-0 border-b border-zinc-300 bg-zinc-50 bg-opacity-75 py-2 pr-6 text-sm font-light text-zinc-400 backdrop-blur backdrop-filter">
+                      Cost
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
