@@ -1,7 +1,7 @@
 import { SUBSCRIPTION_CURRENCY } from "@prisma/client";
 
 type SingleStateProps = {
-  sum: number;
+  sum: number | string;
   currency?: SUBSCRIPTION_CURRENCY;
   subtitle: string;
 };
