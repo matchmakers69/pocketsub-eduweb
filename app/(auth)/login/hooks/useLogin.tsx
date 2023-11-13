@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { toast } from "react-hot-toast";
 import { signIn } from "next-auth/react";
-import { handleApiError } from "@/lib/helpers";
+import { handleApiError } from "@/helpers/errors/handleApiError";
 
 export default function useLogin() {
   const [loading, setLoading] = useState(false);

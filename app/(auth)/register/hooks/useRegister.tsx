@@ -4,7 +4,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { registerUserService } from "@/service/api/registerApi";
 import { useRouter } from "next/navigation";
-import { handleApiError } from "@/lib/helpers";
+import { handleApiError } from "@/helpers/errors/handleApiError";
 
 export default function useReister() {
   const [loading, setLoading] = useState(false);

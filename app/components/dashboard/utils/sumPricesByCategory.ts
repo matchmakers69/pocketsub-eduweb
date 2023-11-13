@@ -1,10 +1,5 @@
+import { exchangeRate } from "@/helpers/exchangeRate";
 import { Subscription } from "@prisma/client";
-
-const exchangeRate: Record<string, number> = {
-  EUR: 0.87,
-  PLN: 0.19,
-  GBP: 1,
-};
 
 type CategoryTotal = Record<string, number>;
 
