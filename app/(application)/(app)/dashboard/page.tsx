@@ -1,4 +1,4 @@
-import getDashboardData from "@/app/actions/getDashboardData";
+import getSubscriptionsData from "@/app/actions/getSubscriptionsData";
 import CategoryBreakdown from "@/app/components/dashboard/CategoryBreakdown";
 import Stats from "@/app/components/dashboard/Stats";
 import AppContentHeader from "@/app/components/layout/AppContentHeader";
@@ -6,7 +6,7 @@ import { format } from "date-fns";
 import Image from "next/image";
 
 export default async function DashboardPage() {
-  const data = await getDashboardData();
+  const data = await getSubscriptionsData("asc");
 
   if (!data) return null;
   return (

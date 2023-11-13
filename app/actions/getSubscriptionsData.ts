@@ -1,7 +1,11 @@
 import { prisma } from "@/lib/db";
 import getCurrentUser from "./getCurrentUser";
 
-export default async function getDashboardData() {
+type NextPaymentSortType = "asc" | "desc";
+
+export default async function getSubscriptionsData(
+  nextPaymentSort: NextPaymentSortType,
+) {
   try {
     const currentUser = await getCurrentUser();
 
@@ -12,7 +16,7 @@ export default async function getDashboardData() {
     const res = prisma.subscription.findMany({
       where: { ownerId: currentUser.id },
       include: { payments: true },
-      orderBy: { next_payment_date: "asc" },
+      orderBy: { next_payment_date: nextPaymentSort },
     });
     return res;
   } catch (error: any) {

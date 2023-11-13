@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Payment, SUBSCRIPTION_CURRENCY, Subscription } from "@prisma/client";
 import { format } from "date-fns";
-import SingleStat from "./SingleStat";
+import SingleStat from "../subscriptions/SingleStat";
 import {
   summarizePaymentsAmounts,
   summarizePrices,
