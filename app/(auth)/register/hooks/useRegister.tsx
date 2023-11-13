@@ -4,6 +4,7 @@ import { useState } from "react";
 import { toast } from "react-hot-toast";
 import { registerUserService } from "@/service/api/registerApi";
 import { useRouter } from "next/navigation";
+import { handleApiError } from "@/lib/helpers";
 
 export default function useReister() {
   const [loading, setLoading] = useState(false);
@@ -22,13 +23,19 @@ export default function useReister() {
       if (response.statusText === "OK") {
         router.push("/login");
       } else {
-        toast.error("Something went wrong");
+        toast.error("Upss...someting went wrong with registration");
         setError("Registration failed");
       }
-    } catch (err: any) {
-      console.error("Registration failed");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        handleApiError(err);
+      } else {
+        toast.error("Sorry possibly bad credentials!");
+        setError(error);
+        console.error("Registration failed");
+      }
+    } finally {
       setLoading(false);
-      setError(err);
     }
   };
 
