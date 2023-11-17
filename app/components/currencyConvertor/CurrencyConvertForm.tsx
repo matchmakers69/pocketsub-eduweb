@@ -7,12 +7,16 @@ import Select from "../formElements/Select";
 import Button from "../buttons/Button";
 import { CurrencyOption } from "@/app/types/Currencies";
 
+type CurrencyConvertFormProps = {
+  options: CurrencyOption[];
+};
+
 type CurrencyFormValues = {
   currency: CurrencyOption;
 };
 
-const CurrencyConvertForm = () => {
-  const { currencies, setSelectedCurrency } = useCurrencyStore();
+const CurrencyConvertForm = ({ options }: CurrencyConvertFormProps) => {
+  const { setSelectedCurrency } = useCurrencyStore();
   const { register, handleSubmit } = useForm<CurrencyFormValues>({
     mode: "onChange",
   });
@@ -28,7 +32,7 @@ const CurrencyConvertForm = () => {
           {...register("currency")}
           label="Select currency"
           name="currency"
-          options={currencies}
+          options={options}
         />
       </div>
       <div>

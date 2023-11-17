@@ -1,13 +1,11 @@
 import { queryKeys } from "@/app/constants/queryKeys";
 import { ExchangeRates } from "@/app/types/Currencies";
 import { CURRENCIES_API } from "@/config/api";
-import { useCurrencyStore } from "@/src/currencyStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 export const useFetchCurrenciesQuery = () => {
-  const { setCurrencyOptions } = useCurrencyStore();
   const getCurrencyDataFn = async () => {
     const response = await fetch(CURRENCIES_API);
     const result: ExchangeRates = await response.json();
@@ -40,7 +38,8 @@ export const useFetchCurrenciesQuery = () => {
   useEffect(() => {
     if (currencies && currencies.length > 0) {
       // toast.success("Fetched data successfully");
-      setCurrencyOptions(currencies);
+      // Possibly set data to redux
+      //setCurrencyOptions(currencies);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currencies]);

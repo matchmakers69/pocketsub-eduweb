@@ -4,7 +4,7 @@ import CurrencyConvertForm from "./CurrencyConvertForm";
 import { useFetchCurrenciesQuery } from "./hooks/useCurrenciesRQ";
 
 const CurrencyConvertorContainer = () => {
-  const { isLoading } = useFetchCurrenciesQuery();
+  const { isLoading, currencies } = useFetchCurrenciesQuery();
 
   if (isLoading) {
     return <div>Data is loading...</div>;
@@ -12,7 +12,7 @@ const CurrencyConvertorContainer = () => {
 
   return (
     <div>
-      <CurrencyConvertForm />
+      <CurrencyConvertForm options={currencies ?? []} />
     </div>
   );
 };
