@@ -3,8 +3,8 @@ import { Nunito } from "next/font/google";
 import "remixicon/fonts/remixicon.css";
 import "./globals.css";
 import type { Metadata } from "next";
-import ClientOnly from "./components/ClientOnly";
 import ToasterProvider from "./components/providers/ToasterProvider";
+import ReactQueryProvider from "./components/providers/ReactQueryProvider";
 
 export const metadata: Metadata = {
   title: "Pocketsub - Eduweb",
@@ -21,13 +21,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={font.className}>
-        <ClientOnly>
+    <ReactQueryProvider>
+      <html lang="en">
+        <body className={font.className}>
           <ToasterProvider />
-        </ClientOnly>
-        <SessionProvider>{children}</SessionProvider>
-      </body>
-    </html>
+          <SessionProvider>{children}</SessionProvider>
+        </body>
+      </html>
+    </ReactQueryProvider>
   );
 }

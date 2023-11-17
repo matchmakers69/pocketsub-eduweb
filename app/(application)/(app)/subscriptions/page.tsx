@@ -17,8 +17,6 @@ export default async function SubscriptionsPage() {
   const mostExpensiveSubscription = calculateMostExpensiveSubscription(data);
   const theCheapestSubscription = calculateTheCheapestSubscription(data);
 
-  console.log(theCheapestSubscription, "theCheapestSubscription");
-
   return (
     <section className="h-full p-8">
       {/* TOP HEADER WITH BUTTONS */}

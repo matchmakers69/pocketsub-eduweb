@@ -7,7 +7,7 @@ import {
   DeepMap,
 } from "react-hook-form";
 import { ErrorMessage } from "@hookform/error-message";
-import FormErrorMessage from "./FormErrorMessage";
+import FormErrorMessage from "../FormErrorMessage";
 import { DetailedHTMLProps } from "react";
 
 type InputType =

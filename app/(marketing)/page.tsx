@@ -1,9 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
+import CurrenciesContainer from "../components/currencyConvertor/CurrencyConvertorContainer";
 
 export default function HomePage() {
   return (
     <>
+      <CurrenciesContainer />
       <section className="mx-auto max-w-7xl">
         <h2 className="mx-auto mb-6 mt-10 max-w-3xl text-center text-5xl font-bold">
           Easiest way to manage your payments

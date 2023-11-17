@@ -1,6 +1,6 @@
 "use client";
 
-import Input from "@/app/components/Input";
+import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";

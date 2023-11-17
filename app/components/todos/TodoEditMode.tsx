@@ -1,6 +1,6 @@
 import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../buttons/Button";
-import Input from "../Input";
+import Input from "../formElements/Input";
 import useUpdateTodo from "./hooks/useUpdateTodo";
 import useDeleteTodo from "./hooks/useDeleteTodo";
 
@@ -21,9 +21,8 @@ function UpdateTodoForm({
   title,
   complete,
   id,
-  onCancel,
-} // onEditTodo,
-: UpdateTodoFormProps) {
+  onCancel, // onEditTodo,
+}: UpdateTodoFormProps) {
   const { loading, updateTodo } = useUpdateTodo();
   const { deleteTodo, loading: deleteLoading } = useDeleteTodo();
   const {

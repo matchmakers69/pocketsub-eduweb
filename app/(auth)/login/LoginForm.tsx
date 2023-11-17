@@ -4,7 +4,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import useLogin from "./hooks/useLogin";
 import { loginSchema } from "./schema/loginSchema";
-import Input from "@/app/components/Input";
+import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import GoogleSignInButton from "@/app/components/buttons/GoogleSignInButton";
 import GithubSignInButton from "@/app/components/buttons/GithubSignInButton";

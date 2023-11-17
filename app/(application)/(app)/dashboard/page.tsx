@@ -2,6 +2,7 @@ import getSubscriptionsData from "@/app/actions/getSubscriptionsData";
 import CategoryBreakdown from "@/app/components/dashboard/CategoryBreakdown";
 import Stats from "@/app/components/dashboard/Stats";
 import AppContentHeader from "@/app/components/layout/AppContentHeader";
+//import { useRates } from "@/src/store";
 import { format } from "date-fns";
 import Image from "next/image";
 
@@ -9,6 +10,8 @@ export default async function DashboardPage() {
   const data = await getSubscriptionsData("asc");
 
   if (!data) return null;
+  // const restObj = useRates.getState().rates;
+
   return (
     <section className="h-full p-8">
       {/* TOP HEADER WITH BUTTONS */}
@@ -19,6 +22,7 @@ export default async function DashboardPage() {
         {/* STATS */}
         <Stats subscriptions={data} />
         {/* DATA TABLE */}
+
         <div className="col-span-3 row-start-2 row-end-3 flex flex-col rounded-xl bg-zinc-50 p-6 xl:col-span-2">
           <h2 className="text-lg font-semibold">Upcoming payments</h2>
           <div className="relative mt-2 grow">
