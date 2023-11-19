@@ -1,16 +1,19 @@
-import { exchangeRate } from "@/helpers/exchangeRate";
+import { ExchangeRate } from "@/app/types/Currencies";
 import {
   Payment,
   SUBSCRIPTION_BILLING_PERIOD,
   Subscription,
 } from "@prisma/client";
 
-export const calculateMostExpensiveSubscription = (data: Subscription[]) => {
+export const calculateMostExpensiveSubscription = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
   return data
     .reduce((acc, subscription) => {
       const { currency, price } = subscription;
 
-      const costInGbp = price * exchangeRate[currency];
+      const costInGbp = price / exchangeRate[currency];
 
       const mostExpensive = acc > costInGbp ? acc : costInGbp;
       return mostExpensive;
@@ -18,12 +21,15 @@ export const calculateMostExpensiveSubscription = (data: Subscription[]) => {
     .toFixed(2);
 };
 
-export const calculateTheCheapestSubscription = (data: Subscription[]) => {
+export const calculateTheCheapestSubscription = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
   return data
     .reduce((acc, subscription) => {
       const { price, currency } = subscription;
 
-      const costInGbp = price * exchangeRate[currency];
+      const costInGbp = price / exchangeRate[currency];
 
       const minExpensive = acc > costInGbp ? costInGbp : acc;
 
@@ -36,6 +42,7 @@ export function getSubscriptionsStats(
   data: (Subscription & {
     payments: Payment[];
   })[],
+  exchangeRate: ExchangeRate,
 ) {
   let activeSubscriptions = 0;
   let totalMonthlyCost = 0;
@@ -43,7 +50,7 @@ export function getSubscriptionsStats(
 
   data.forEach((subscription) => {
     activeSubscriptions = activeSubscriptions + 1;
-    const costInGbp = subscription.price * exchangeRate[subscription.currency];
+    const costInGbp = subscription.price / exchangeRate[subscription.currency];
 
     // Monthly and yearly cost
     switch (subscription.billing_period) {

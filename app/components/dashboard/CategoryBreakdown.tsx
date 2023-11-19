@@ -1,9 +1,12 @@
+"use client";
+
 import { Payment, Subscription } from "@prisma/client";
 import {
   getCategoriesWithPrice,
   getCheapestCatagory,
   getMostExpensiveCatagory,
 } from "./utils/sumPricesByCategory";
+import { useCurrencyStore } from "@/src/currencyStore";
 
 type CategoryBreakdownProps = {
   subscriptions: (Subscription & {
@@ -12,9 +15,19 @@ type CategoryBreakdownProps = {
 };
 
 function CategoryBreakdown({ subscriptions }: CategoryBreakdownProps) {
-  const categoriesWithPrice = getCategoriesWithPrice(subscriptions);
-  const mostExpensiveCategory = getMostExpensiveCatagory(subscriptions);
-  const cheapestCategory = getCheapestCatagory(subscriptions);
+  const { exchangeRate } = useCurrencyStore();
+  const categoriesWithPrice = getCategoriesWithPrice(
+    subscriptions,
+    exchangeRate ?? {},
+  );
+  const mostExpensiveCategory = getMostExpensiveCatagory(
+    subscriptions,
+    exchangeRate ?? {},
+  );
+  const cheapestCategory = getCheapestCatagory(
+    subscriptions,
+    exchangeRate ?? {},
+  );
 
   const { cheapest } = cheapestCategory;
   const { mostExpensive } = mostExpensiveCategory;

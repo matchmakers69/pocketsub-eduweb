@@ -1,3 +1,3 @@
 export const queryKeys = {
-  currencies: "currencies",
+  currencyRate: "currencyRate",
 };

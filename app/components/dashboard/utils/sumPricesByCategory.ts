@@ -1,14 +1,17 @@
-import { exchangeRate } from "@/helpers/exchangeRate";
+import { ExchangeRate } from "@/app/types/Currencies";
 import { Subscription } from "@prisma/client";
 
 type CategoryTotal = Record<string, number>;
 
-export const getCategoryWithTotalSum = (data: Subscription[]) => {
+const getCategoryWithTotalSum = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
   const categoryTotal: CategoryTotal = data.reduce(
     (acc: Record<string, number>, currentValue) => {
       const { price, category, currency } = currentValue;
       const categoryPriceWithRateExchange =
-        currency in exchangeRate ? price * exchangeRate[currency] : price;
+        currency in exchangeRate ? price / exchangeRate[currency] : price;
 
       if (category in acc) {
         acc[category] += categoryPriceWithRateExchange;
@@ -23,8 +26,11 @@ export const getCategoryWithTotalSum = (data: Subscription[]) => {
   return categoryTotal;
 };
 
-export const getCategoriesWithPrice = (data: Subscription[]) => {
-  const categoryWithPrice = getCategoryWithTotalSum(data);
+export const getCategoriesWithPrice = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
+  const categoryWithPrice = getCategoryWithTotalSum(data, exchangeRate);
   return Object.entries(categoryWithPrice).map(([name, price]) => {
     return {
       name,
@@ -33,8 +39,11 @@ export const getCategoriesWithPrice = (data: Subscription[]) => {
   });
 };
 
-export const getMostExpensiveCatagory = (data: Subscription[]) => {
-  const categoriesWithPrice = getCategoriesWithPrice(data);
+export const getMostExpensiveCatagory = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
+  const categoriesWithPrice = getCategoriesWithPrice(data, exchangeRate);
   const mostExpensive = categoriesWithPrice.reduce((maxCategory, category) => {
     return category.price > maxCategory.price ? category : maxCategory;
   }, categoriesWithPrice[0]);
@@ -44,8 +53,11 @@ export const getMostExpensiveCatagory = (data: Subscription[]) => {
   };
 };
 
-export const getCheapestCatagory = (data: Subscription[]) => {
-  const categoriesWithPrice = getCategoriesWithPrice(data);
+export const getCheapestCatagory = (
+  data: Subscription[],
+  exchangeRate: ExchangeRate,
+) => {
+  const categoriesWithPrice = getCategoriesWithPrice(data, exchangeRate);
   const cheapest = categoriesWithPrice.reduce((minCategory, category) => {
     return category.price < minCategory.price ? category : minCategory;
   }, categoriesWithPrice[0]);

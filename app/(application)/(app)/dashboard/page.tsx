@@ -1,4 +1,5 @@
 import getSubscriptionsData from "@/app/actions/getSubscriptionsData";
+import CurrentCurrencyRates from "@/app/components/currencyConvertor/CurrentCurrencyRates";
 import CategoryBreakdown from "@/app/components/dashboard/CategoryBreakdown";
 import Stats from "@/app/components/dashboard/Stats";
 import AppContentHeader from "@/app/components/layout/AppContentHeader";
@@ -14,6 +15,7 @@ export default async function DashboardPage() {
 
   return (
     <section className="h-full p-8">
+      <CurrentCurrencyRates />
       {/* TOP HEADER WITH BUTTONS */}
       <AppContentHeader title="Dashboard" />
       {/* CONTENT */}

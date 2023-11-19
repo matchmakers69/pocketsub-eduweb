@@ -33,6 +33,7 @@ export const sumPricesInCurrency = (subscriptions: Subscription[]) => {
     PLN: 0,
     EUR: 0,
     GBP: 0,
+    USD: 0,
   };
 
   const result = subscriptions.reduce((total, subscription) => {
@@ -48,6 +49,7 @@ export type Totals = {
   totalEUR: number;
   totalGBP: number;
   totalPLN: number;
+  totalUSD: number;
 };
 
 export const summarizePrices = (subscriptions: Subscription[]): Totals => {
@@ -60,6 +62,9 @@ export const summarizePrices = (subscriptions: Subscription[]): Totals => {
         case SUBSCRIPTION_CURRENCY.EUR:
           totals.totalEUR += subscription.price;
           break;
+        case SUBSCRIPTION_CURRENCY.USD:
+          totals.totalUSD += subscription.price;
+          break;
         case SUBSCRIPTION_CURRENCY.GBP:
           totals.totalGBP += subscription.price;
           break;
@@ -70,12 +75,14 @@ export const summarizePrices = (subscriptions: Subscription[]): Totals => {
       totalEUR: 0,
       totalGBP: 0,
       totalPLN: 0,
+      totalUSD: 0,
     },
   );
 
   return {
     totalEUR: parseFloat(totals.totalEUR.toFixed(2)),
     totalGBP: parseFloat(totals.totalGBP.toFixed(2)),
+    totalUSD: parseFloat(totals.totalGBP.toFixed(2)),
     totalPLN: parseFloat(totals.totalPLN.toFixed(2)),
   };
 };
