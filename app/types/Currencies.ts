@@ -1,14 +1,14 @@
 export type CurrencyOption = {
   label: string;
-  value: number | string;
+  value: number;
 };
 
 export type ExchangeRate = {
-  [currency: string]: number;
+  [currency: string]: string;
 };
 
 export type ExchangeRates = {
   data: {
-    [currencyCode: string]: number;
+    [currencyCode: string]: string;
   };
 };

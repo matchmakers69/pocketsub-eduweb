@@ -1,42 +1,43 @@
-import React, { forwardRef, SelectHTMLAttributes } from "react";
+import React, { forwardRef } from "react";
+import Select, { ActionMeta } from "react-select";
 
 export type Value = string | number;
 export type Option =
   | Value
   | { label: string; value: Value; disabled?: boolean };
 
-interface SelectProps extends SelectHTMLAttributes<HTMLSelectElement> {
+type SelectFieldProps = {
   label: string;
   options: Option[];
-}
+  value: Option;
+  onChange: (value: Option | null, actionMeta: ActionMeta<Option>) => void;
+};
 
-const Select = forwardRef<HTMLSelectElement, SelectProps>(
-  function SelectComponent(
-    { onChange, name, label, onBlur, options, ...rest },
-    ref,
-  ) {
+const SelectField = forwardRef<HTMLDivElement, SelectFieldProps>(
+  function SelectComponent({ onChange, label, value, options, ...rest }) {
+    const handleChange = (
+      selectedOption: Option | null,
+      actionMeta: ActionMeta<Option>,
+    ) => {
+      onChange(selectedOption, actionMeta);
+    };
+
     return (
       <>
-        <label>{label}</label>
-        <select
-          name={name}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
+        <label className="text-md mb-2 block font-medium text-gray-900 dark:text-white">
+          {label}
+        </label>
+        <Select
+          value={value}
+          placeholder={label}
+          options={options}
+          onChange={handleChange}
+          isClearable
           {...rest}
-        >
-          {options.map((option, index) => (
-            <option
-              key={index}
-              value={typeof option === "object" ? option.value : option}
-            >
-              {typeof option === "object" ? option.label : option}
-            </option>
-          ))}
-        </select>
+        />
       </>
     );
   },
 );
 
-export default Select;
+export default SelectField;

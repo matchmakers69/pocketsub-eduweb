@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { InputHTMLAttributes } from "react";
 import {
   UseFormRegister,
@@ -33,10 +34,10 @@ type InputProps = {
 
 type FormInputProps<T extends FieldValues> = {
   name: Path<T>;
-  register: UseFormRegister<T>;
+  register: any;
   errors?: Partial<DeepMap<T, FieldError>>;
   disabled?: boolean;
-  formatPrice?: boolean;
+  hasCurrencyPrefix?: boolean;
   required?: boolean;
   checkbox?: boolean;
 } & Omit<InputProps, "name">;
@@ -47,7 +48,7 @@ const Input = <T extends Record<string, unknown>>({
   name,
   type,
   disabled,
-  formatPrice,
+  hasCurrencyPrefix = false,
   required,
   register,
   errors,
@@ -55,9 +56,22 @@ const Input = <T extends Record<string, unknown>>({
 }: FormInputProps<T>): JSX.Element => {
   const isCheckbox = type === "checkbox";
 
+  const inputOptions: any = {
+    required,
+  };
+
+  if (hasCurrencyPrefix) {
+    inputOptions.valueAsNumber = true;
+    inputOptions.pattern = /^[1-9]\d*$/;
+  }
+
   return (
     <div className={`relative w-full ${isCheckbox ? "flex items-center" : ""}`}>
-      {formatPrice && !isCheckbox && <i className={`ri-${iconName}`} />}
+      {hasCurrencyPrefix && !isCheckbox && (
+        <i
+          className={`ri-${iconName} absolute left-2 top-3 z-10 origin-[0] font-light text-slate-400`}
+        />
+      )}
       {isCheckbox ? (
         <input
           className={`peer h-5 w-5 cursor-pointer rounded-md border bg-white outline-none transition ${
@@ -72,18 +86,18 @@ const Input = <T extends Record<string, unknown>>({
         <input
           className={`peer w-full rounded-md border bg-white p-3 pt-3 font-light outline-none transition ${
             disabled ? "cursor-not-allowed opacity-70" : ""
-          } ${formatPrice ? "pl-9" : "pl-4"}`}
+          } ${hasCurrencyPrefix ? "pl-9" : "pl-4"}`}
           disabled={disabled}
           type={type}
           id={id}
-          {...register(name, { required })}
-          placeholder=" "
+          {...register(name, inputOptions)}
+          placeholder=""
         />
       )}
       <label
         htmlFor={name}
         className={`text-md absolute top-3 z-10 origin-[0] -translate-y-3 transform duration-150 ${
-          formatPrice ? "left-9" : "left-4"
+          hasCurrencyPrefix ? "left-9" : "left-4"
         } peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75`}
       >
         {label}

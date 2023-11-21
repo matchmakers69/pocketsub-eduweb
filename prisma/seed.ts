@@ -35,7 +35,7 @@ function nextPaymentMonthGenerator(billingPeriod: SUBSCRIPTION_BILLING_PERIOD) {
 }
 
 async function main() {
-  const password = await hash("Wieslawa698@@", 12);
+  const password = await hash("Przemek698@@", 12);
   const user = await prisma.user.upsert({
     where: {
       id: "przemek458941",

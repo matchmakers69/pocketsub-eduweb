@@ -3,7 +3,6 @@ import CurrentCurrencyRates from "@/app/components/currencyConvertor/CurrentCurr
 import CategoryBreakdown from "@/app/components/dashboard/CategoryBreakdown";
 import Stats from "@/app/components/dashboard/Stats";
 import AppContentHeader from "@/app/components/layout/AppContentHeader";
-//import { useRates } from "@/src/store";
 import { format } from "date-fns";
 import Image from "next/image";
 

@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Link from "next/link";
-import Image from "next/image";
+import CurrencyConvertor from "../components/currencyConvertor/CurrencyConvertor";
 
 export default function HomePage() {
   return (
@@ -18,8 +19,9 @@ export default function HomePage() {
         >
           Get Pocketsub
         </Link>
-        <div className="mx-auto mt-10 max-w-[960px] px-4">
-          <Image
+        <div className="mx-auto mt-10 max-w-[800px] px-4">
+          <CurrencyConvertor />
+          {/* <Image
             src="/assets/hero_mock.png"
             alt="Hero image"
             width={0}
@@ -27,7 +29,7 @@ export default function HomePage() {
             sizes="100vw"
             priority
             className="mx-auto h-auto w-full"
-          />
+          /> */}
         </div>
       </section>
       <section className="mx-auto max-w-7xl">

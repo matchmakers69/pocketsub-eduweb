@@ -1,21 +1,20 @@
 import { create } from "zustand";
 import { mountStoreDevtool } from "simple-zustand-devtools";
-import { ExchangeRate, ExchangeRates } from "@/app/types/Currencies";
+import { ExchangeRate } from "@/app/types/Currencies";
+
+export type CurrencyCode = "PLN" | "USD" | "EUR" | "GBP";
 
 type CurrencyStoreState = {
   exchangeRate: ExchangeRate | null;
-  currencies: ExchangeRates[];
-  setSelectedCurrency: (newCurrency: string) => void;
-  setCurrencyOptions: (data: ExchangeRates[]) => void;
+  selectedCurrency: CurrencyCode | null;
+  setSelectedCurrency: (newCurrency: CurrencyCode) => void;
   setCurrencyRate: (currency: ExchangeRate) => void;
 };
 
 export const useCurrencyStore = create<CurrencyStoreState>((set) => ({
-  currencies: [],
   exchangeRate: null,
-  selectedCurrency: "",
+  selectedCurrency: null,
   setCurrencyRate: (currency) => set({ exchangeRate: currency }),
-  setCurrencyOptions: (data) => set({ currencies: data }),
   setSelectedCurrency: (newCurrency) =>
     set((state) => ({ ...state, selectedCurrency: newCurrency })),
 }));
