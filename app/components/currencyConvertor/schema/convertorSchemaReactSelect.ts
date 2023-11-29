@@ -1,6 +1,6 @@
 import * as yup from "yup";
 
-export const convertorSchema = yup.object().shape({
+export const convertorSchemaReactSelect = yup.object().shape({
   amount: yup
     .number()
     .positive("Please enter a positive number")
@@ -20,5 +20,8 @@ export const convertorSchema = yup.object().shape({
       test: (value) => (Object.is(value, -0) ? false : true),
     })
     .required("This field is required"),
-  currencyOption: yup.string().required("Select"),
+  currencyOption: yup
+    .string()
+    .oneOf(["PLN", "EUR", "USD", "GBP"])
+    .required("It needs to be selected"),
 });

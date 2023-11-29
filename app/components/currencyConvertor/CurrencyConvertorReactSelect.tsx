@@ -1,44 +1,54 @@
 "use client";
 
-import { SubmitHandler, useController, useForm } from "react-hook-form";
+import { SubmitHandler, Controller, useForm } from "react-hook-form";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Input from "../formElements/Input";
 import Button from "../buttons/Button";
+import { useCurrencyStore } from "@/src/currencyStore";
+import { Option } from "./CurrencyConvertorContainer";
+import Select from "react-select";
+import { convertorSchemaReactSelect } from "./schema/convertorSchemaReactSelect";
 
-import { convertorSchema } from "./schema/convertorSchema";
-import SelectField, { Option } from "../formElements/Select";
-import { useCurrencyStoreCustomSelect } from "@/src/currencyStoreCustomSelect";
-
-type CurrencyConvertorProps = {
+type CurrencyConvertorReactSelectProps = {
   options: Option[];
 };
 
-export type TConvertorValues = Yup.InferType<typeof convertorSchema>;
+export type TConvertorValues = Yup.InferType<typeof convertorSchemaReactSelect>;
 
-const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
-  const { totalInGBP, setTotalInGBP } = useCurrencyStoreCustomSelect();
+const CurrencyConvertorReactSelect = ({
+  options,
+}: CurrencyConvertorReactSelectProps) => {
+  const { setSelectedCurrency, selectedCurrency } = useCurrencyStore();
 
   const {
     handleSubmit,
     register,
     control,
+    getValues,
     formState: { errors, isDirty, isValid },
   } = useForm<TConvertorValues>({
     mode: "onChange",
-    resolver: yupResolver(convertorSchema),
-  });
-
-  const { field: currencyRateField } = useController({
-    name: "currencyOption",
-    control,
+    resolver: yupResolver(convertorSchemaReactSelect),
+    defaultValues: {
+      amount: 0,
+      currencyOption: undefined,
+    },
   });
 
   const handleFormSubmit: SubmitHandler<TConvertorValues> = (data) => {
-    const totalInGBP = Number(data.amount) / Number(data.currencyOption);
-    setTotalInGBP(totalInGBP);
+    if (data.currencyOption) {
+      setSelectedCurrency(data.currencyOption);
+    }
   };
 
+  const amount = getValues("amount");
+  const currencyValue = options.find(
+    (option) => option.label === selectedCurrency,
+  )?.value;
+  const selectedCurrencyToGbp = (
+    Number(amount) / Number(currencyValue)
+  ).toFixed(2);
   return (
     <div className="rounded-xl bg-zinc-50 p-3">
       <div className="relative mx-auto my-6 h-full w-full md:h-auto md:w-5/6 lg:h-auto lg:w-4/6 ">
@@ -62,16 +72,21 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
               />
             </div>
             <div className="mb-5 flex flex-col gap-1">
-              <SelectField
-                value={currencyRateField.value ?? ""}
-                onChange={(option: Option) =>
-                  currencyRateField.onChange(option)
-                }
-                label="Select currency country"
-                id="currencyOption"
+              <Controller
                 name="currencyOption"
-                placeholder="Choose country currency"
-                options={options}
+                control={control}
+                render={({ field: { name, ref, onChange, value } }) => {
+                  return (
+                    <Select
+                      ref={ref}
+                      name={name}
+                      onChange={(option) => option && onChange(option.label)}
+                      options={options}
+                      value={options.find((option) => option.label === value)}
+                      placeholder="Currency country"
+                    />
+                  );
+                }}
               />
             </div>
             <div className="mb-4 flex justify-center gap-2">
@@ -82,11 +97,11 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
               />
             </div>
           </form>
-          {totalInGBP && <div>Total in GBP: {totalInGBP.toFixed(2)}</div>}
+          {currencyValue && <div>{selectedCurrencyToGbp} GBP</div>}
         </div>
       </div>
     </div>
   );
 };
 
-export default CurrencyConvertor;
+export default CurrencyConvertorReactSelect;

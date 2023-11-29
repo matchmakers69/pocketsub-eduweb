@@ -7,13 +7,14 @@ import {
 
 export const calculateMostExpensiveSubscription = (
   data: Subscription[],
-  exchangeRate: ExchangeRate,
+  exchangeRate: ExchangeRate | null,
 ) => {
+  if (!exchangeRate) return 0;
   return data
     .reduce((acc, subscription) => {
       const { currency, price } = subscription;
 
-      const costInGbp = price / exchangeRate[currency];
+      const costInGbp = price / Number(exchangeRate[currency]);
 
       const mostExpensive = acc > costInGbp ? acc : costInGbp;
       return mostExpensive;
@@ -23,13 +24,14 @@ export const calculateMostExpensiveSubscription = (
 
 export const calculateTheCheapestSubscription = (
   data: Subscription[],
-  exchangeRate: ExchangeRate,
+  exchangeRate: ExchangeRate | null,
 ) => {
+  if (!exchangeRate) return 0;
   return data
     .reduce((acc, subscription) => {
       const { price, currency } = subscription;
 
-      const costInGbp = price / exchangeRate[currency];
+      const costInGbp = price / Number(exchangeRate[currency]);
 
       const minExpensive = acc > costInGbp ? costInGbp : acc;
 
@@ -49,8 +51,9 @@ export function getSubscriptionsStats(
   let totalYearlyCost = 0;
 
   data.forEach((subscription) => {
+    const currency: string = subscription.currency;
     activeSubscriptions = activeSubscriptions + 1;
-    const costInGbp = subscription.price / exchangeRate[subscription.currency];
+    const costInGbp = subscription.price / Number(exchangeRate[currency]);
 
     // Monthly and yearly cost
     switch (subscription.billing_period) {

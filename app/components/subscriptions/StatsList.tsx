@@ -21,11 +21,11 @@ const StatsList = ({ subscriptions }: StatsListProps) => {
 
   const mostExpensiveSubscription = calculateMostExpensiveSubscription(
     subscriptions,
-    exchangeRate ?? {},
+    exchangeRate,
   );
   const theCheapestSubscription = calculateTheCheapestSubscription(
     subscriptions,
-    exchangeRate ?? {},
+    exchangeRate,
   );
   return (
     <div className="flex h-full items-center gap-6">

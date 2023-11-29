@@ -1,14 +1,17 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { queryKeys } from "@/app/constants/queryKeys";
-import { ExchangeRate, ExchangeRates } from "@/app/types/Currencies";
+import { ExchangeRates } from "@/app/types/Currencies";
 import { CURRENCIES_API } from "@/config/api";
 import { useCurrencyStore } from "@/src/currencyStore";
+import { useFlagsStore } from "@/src/flagsStore";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { toast } from "react-hot-toast";
 
 export const useFetchCurrenciesQuery = () => {
   const { setCurrencyRate } = useCurrencyStore();
+  const { setToast, toast: flagToast } = useFlagsStore();
+  const flagToastShown = flagToast.currencyRateSuccess;
+
   const getCurrencyDataFn = async () => {
     const response = await fetch(CURRENCIES_API);
     const result: ExchangeRates = await response.json();
@@ -43,10 +46,12 @@ export const useFetchCurrenciesQuery = () => {
   useEffect(() => {
     if (currencyRate) {
       setCurrencyRate(currencyRate);
-
-      toast.success("Fetched data successfully", { id: "1" });
+      if (!flagToastShown) {
+        toast.success("Fetched data successfully");
+        setToast("currencyRateSuccess", true);
+      }
     }
-  }, [currencyRate, setCurrencyRate]);
+  }, [currencyRate, flagToastShown, setCurrencyRate, setToast]);
 
   return {
     currencyRate,

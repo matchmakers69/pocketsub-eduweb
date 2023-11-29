@@ -1,5 +1,4 @@
 import { create } from "zustand";
-import { mountStoreDevtool } from "simple-zustand-devtools";
 import { ExchangeRate } from "@/app/types/Currencies";
 
 export type CurrencyCode = "PLN" | "USD" | "EUR" | "GBP";
@@ -18,7 +17,3 @@ export const useCurrencyStore = create<CurrencyStoreState>((set) => ({
   setSelectedCurrency: (newCurrency) =>
     set((state) => ({ ...state, selectedCurrency: newCurrency })),
 }));
-
-if (process.env.NODE_ENV === "development") {
-  mountStoreDevtool("Store", useCurrencyStore);
-}

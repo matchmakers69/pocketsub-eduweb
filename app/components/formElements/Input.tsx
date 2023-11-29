@@ -40,6 +40,9 @@ type FormInputProps<T extends FieldValues> = {
   hasCurrencyPrefix?: boolean;
   required?: boolean;
   checkbox?: boolean;
+  min?: string;
+  placeholder?: string;
+  step?: string;
 } & Omit<InputProps, "name">;
 
 const Input = <T extends Record<string, unknown>>({
@@ -53,6 +56,9 @@ const Input = <T extends Record<string, unknown>>({
   register,
   errors,
   iconName,
+  min = "",
+  placeholder = "Enter something",
+  step = "",
 }: FormInputProps<T>): JSX.Element => {
   const isCheckbox = type === "checkbox";
 
@@ -66,12 +72,20 @@ const Input = <T extends Record<string, unknown>>({
   }
 
   return (
-    <div className={`relative w-full ${isCheckbox ? "flex items-center" : ""}`}>
+    <div className={`w-full ${isCheckbox ? "flex items-center" : ""}`}>
       {hasCurrencyPrefix && !isCheckbox && (
         <i
           className={`ri-${iconName} absolute left-2 top-3 z-10 origin-[0] font-light text-slate-400`}
         />
       )}
+      <label
+        htmlFor={name}
+        className={`mb-1 block text-left text-sm font-medium text-gray-900 dark:text-white ${
+          hasCurrencyPrefix ? "absolute" : "static"
+        } z-10 ${hasCurrencyPrefix ? "left-9" : "left-0"}`}
+      >
+        {label}
+      </label>
       {isCheckbox ? (
         <input
           className={`peer h-5 w-5 cursor-pointer rounded-md border bg-white outline-none transition ${
@@ -90,18 +104,12 @@ const Input = <T extends Record<string, unknown>>({
           disabled={disabled}
           type={type}
           id={id}
+          min={min}
           {...register(name, inputOptions)}
-          placeholder=""
+          step={step}
+          placeholder={placeholder}
         />
       )}
-      <label
-        htmlFor={name}
-        className={`text-md absolute top-3 z-10 origin-[0] -translate-y-3 transform duration-150 ${
-          hasCurrencyPrefix ? "left-9" : "left-4"
-        } peer-placeholder-shown:translate-y-0 peer-placeholder-shown:scale-100 peer-focus:-translate-y-4 peer-focus:scale-75`}
-      >
-        {label}
-      </label>
 
       <ErrorMessage
         errors={errors}
