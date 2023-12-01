@@ -5,6 +5,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import ToasterProvider from "./components/providers/ToasterProvider";
 import ReactQueryProvider from "./components/providers/ReactQueryProvider";
+import ProgressBarProvider from "./components/providers/ProgressBarProvider";
 
 export const metadata: Metadata = {
   title: "Pocketsub - Eduweb",
@@ -25,7 +26,9 @@ export default function RootLayout({
       <html lang="en">
         <body className={font.className}>
           <ToasterProvider />
-          <SessionProvider>{children}</SessionProvider>
+          <ProgressBarProvider>
+            <SessionProvider>{children}</SessionProvider>
+          </ProgressBarProvider>
         </body>
       </html>
     </ReactQueryProvider>

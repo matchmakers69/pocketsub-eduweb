@@ -1,9 +1,10 @@
 "use client";
-import Button from "./Button";
+
 import userAvatar from "../../../public/assets/avatar.svg";
 import Image from "next/image";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { signOut } from "next-auth/react";
+import ModalAddSubscription from "../modals/ModalAddSubscription";
 
 type AppUserButtonProps = {
   username: string;
@@ -14,7 +15,7 @@ export default function AppUserButton({ username }: AppUserButtonProps) {
     <div className="flex w-full flex-col items-center justify-center gap-4 divide-y-[1px] divide-zinc-300">
       <div>
         <p className="mb-2 text-center">Add new subscription?</p>
-        <Button label="New subscription" iconName="add-line" type="button" />
+        <ModalAddSubscription />
       </div>
       <div className="flex w-full items-center px-4 py-4">
         <div className="h-10 w-10 overflow-hidden rounded-full">

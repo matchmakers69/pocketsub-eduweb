@@ -13,7 +13,7 @@ export default async function DashboardPage() {
   // const restObj = useRates.getState().rates;
 
   return (
-    <section className="h-full p-8">
+    <section className="h-full px-8 pb-14 pt-8 ">
       <CurrentCurrencyRates />
       {/* TOP HEADER WITH BUTTONS */}
       <AppContentHeader title="Dashboard" />
