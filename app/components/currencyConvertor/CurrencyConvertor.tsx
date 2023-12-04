@@ -63,11 +63,12 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
             </div>
             <div className="mb-5 flex flex-col gap-1">
               <SelectField
+                fullWidth
                 value={currencyRateField.value ?? ""}
                 onChange={(option: Option) =>
                   currencyRateField.onChange(option)
                 }
-                label="Select currency country"
+                label="Select currency"
                 id="currencyOption"
                 name="currencyOption"
                 placeholder="Choose country currency"

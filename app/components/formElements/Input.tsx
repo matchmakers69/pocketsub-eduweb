@@ -18,7 +18,8 @@ type InputType =
   | "number"
   | "image"
   | "file"
-  | "checkbox";
+  | "checkbox"
+  | "date";
 
 type InputProps = {
   id: string;
@@ -43,6 +44,8 @@ type FormInputProps<T extends FieldValues> = {
   min?: string;
   placeholder?: string;
   step?: string;
+  mask?: boolean;
+  maskText?: string;
 } & Omit<InputProps, "name">;
 
 const Input = <T extends Record<string, unknown>>({
@@ -52,6 +55,8 @@ const Input = <T extends Record<string, unknown>>({
   type,
   disabled,
   hasCurrencyPrefix = false,
+  mask = false,
+  maskText = "",
   required,
   register,
   errors,
@@ -72,23 +77,25 @@ const Input = <T extends Record<string, unknown>>({
   }
 
   return (
-    <div className={`w-full ${isCheckbox ? "flex items-center" : ""}`}>
+    <>
       {hasCurrencyPrefix && !isCheckbox && (
         <i
           className={`ri-${iconName} absolute left-2 top-3 z-10 origin-[0] font-light text-slate-400`}
         />
       )}
-      <label
-        htmlFor={name}
-        className={`mb-1 block text-left text-sm font-medium text-gray-900 dark:text-white ${
-          hasCurrencyPrefix ? "absolute" : "static"
-        } z-10 ${hasCurrencyPrefix ? "left-9" : "left-0"}`}
-      >
-        {label}
-      </label>
+      {label && (
+        <label
+          htmlFor={name}
+          className={`mb-1 block text-left text-sm font-light text-zinc-600 dark:text-white ${
+            hasCurrencyPrefix ? "absolute" : "static"
+          } z-10 ${hasCurrencyPrefix ? "left-9" : "left-0"}`}
+        >
+          {label}
+        </label>
+      )}
       {isCheckbox ? (
         <input
-          className={`peer h-5 w-5 cursor-pointer rounded-md border bg-white outline-none transition ${
+          className={`peer h-5 w-5 cursor-pointer rounded-md border border-gray-300 bg-gray-50 outline-none transition ${
             disabled ? "cursor-not-allowed opacity-70" : ""
           }`}
           disabled={disabled}
@@ -97,18 +104,27 @@ const Input = <T extends Record<string, unknown>>({
           {...register(name, { required })}
         />
       ) : (
-        <input
-          className={`peer w-full rounded-md border bg-white p-3 pt-3 font-light outline-none transition ${
-            disabled ? "cursor-not-allowed opacity-70" : ""
-          } ${hasCurrencyPrefix ? "pl-9" : "pl-4"}`}
-          disabled={disabled}
-          type={type}
-          id={id}
-          min={min}
-          {...register(name, inputOptions)}
-          step={step}
-          placeholder={placeholder}
-        />
+        <div className={mask ? "relative" : "static"}>
+          <input
+            className={`w-full  rounded-md border border-zinc-400 bg-zinc-100 p-2 text-sm font-light text-zinc-800 outline-none placeholder:text-zinc-400  focus:ring-1 focus:ring-inset focus:ring-zinc-800 ${
+              disabled ? "cursor-not-allowed opacity-70" : ""
+            } ${hasCurrencyPrefix ? "pl-9" : "pl-2"} ${
+              mask ? "pl-20" : "pl-2"
+            }`}
+            disabled={disabled}
+            type={type}
+            id={id}
+            min={min}
+            {...register(name, inputOptions)}
+            step={step}
+            placeholder={placeholder}
+          />
+          {mask && (
+            <div className="absolute inset-y-0 left-0 flex items-center rounded-md rounded-r-none bg-zinc-400 p-2">
+              {maskText}
+            </div>
+          )}
+        </div>
       )}
 
       <ErrorMessage
@@ -118,7 +134,7 @@ const Input = <T extends Record<string, unknown>>({
           <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
         )}
       />
-    </div>
+    </>
   );
 };
 
