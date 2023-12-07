@@ -1,25 +1,25 @@
+"use server";
 import { prisma } from "@/lib/db";
-import getCurrentUser from "./getCurrentUser";
-
-type NextPaymentSortType = "asc" | "desc";
+// import getCurrentUser from "./getCurrentUser";
 
 export default async function getSubscriptionsData(
-  nextPaymentSort: NextPaymentSortType,
+  userId: string,
+  orderBy: { key: string; value: string },
 ) {
   try {
-    const currentUser = await getCurrentUser();
+    // const currentUser = await getCurrentUser();
 
-    if (!currentUser) {
-      return;
-    }
+    // if (!currentUser) {
+    //   return;
+    // }
 
     const res = prisma.subscription.findMany({
-      where: { ownerId: currentUser.id },
+      where: { ownerId: userId },
       include: { payments: true },
-      orderBy: { next_payment_date: nextPaymentSort },
+      orderBy: { [`${orderBy.key}`]: orderBy.value },
     });
     return res;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    throw new Error("Failed to fetch subscriptions data");
   }
 }

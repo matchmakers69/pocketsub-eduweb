@@ -11,6 +11,12 @@ import {
   SUBSCRIPTION_BILLING_PERIOD,
 } from "@prisma/client";
 import { subscriptionValidationSchema } from "./validationSchema";
+import format from "date-fns/format";
+import FormErrors from "../formElements/FormErrors";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import { useSession } from "next-auth/react";
+import { useAddSubscriptionQuery } from "@/app/hooks/useAddSubscriptionQuery";
+import { useState } from "react";
 
 const categoryOptions = [
   "Entertainment",
@@ -26,6 +32,11 @@ export type TAddModalSubscription = Yup.InferType<
 >;
 
 const ModalAddSubscription = () => {
+  const [isModalOpen, setIsmodalOpen] = useState(false);
+
+  const { data: session } = useSession();
+  const user = session?.user;
+  const { mutation } = useAddSubscriptionQuery();
   const {
     handleSubmit,
     register,
@@ -38,7 +49,7 @@ const ModalAddSubscription = () => {
       name: "",
       category: "",
       cost: undefined,
-      currency: "",
+      avatar_url: "https://dsc.cloud/88160a/Google-Avatar.png",
     },
   });
 
@@ -63,17 +74,44 @@ const ModalAddSubscription = () => {
   const handleFormSubmit: SubmitHandler<TAddModalSubscription> = async (
     data,
   ) => {
-    console.log(data);
+    const {
+      next_payment,
+      name,
+      category,
+      billing_period,
+      cost,
+      currency,
+      avatar_url,
+    } = data;
+    if (next_payment && billing_period && cost && avatar_url && user) {
+      mutation.mutate({
+        name,
+        next_payment,
+        category,
+        price: cost,
+        avatar_url,
+        billing_period,
+        currency: currency as SUBSCRIPTION_CURRENCY,
+        userId: user?.id,
+      });
+    }
+
+    setIsmodalOpen(false);
   };
 
+  const formErrorsMessage = collectFormErrors(errors);
+  if (!user) return <div>Loading...</div>;
   return (
-    <Dialog.Root>
+    <Dialog.Root
+      open={isModalOpen}
+      onOpenChange={(open) => setIsmodalOpen(open)}
+    >
       <Dialog.Trigger asChild>
         <Button label="New subscription" iconName="add-line" type="button" />
       </Dialog.Trigger>
       <Dialog.Portal>
-        <Dialog.Overlay className="fixed inset-0 bg-zinc-950 bg-opacity-80 data-[state-open]:animate-overlayShow" />
-        <Dialog.Content className="fixed left-[50%] top-[50%] min-h-[70vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
+        <Dialog.Overlay className="fixed inset-0 grid place-items-center overflow-y-auto bg-zinc-950 bg-opacity-80 data-[state-open]:animate-overlayShow" />
+        <Dialog.Content className="fixed left-[50%] top-[50%] max-h-[90vh] w-[90vw] max-w-[500px] translate-x-[-50%] translate-y-[-50%] overflow-y-auto rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
           <Dialog.Close asChild>
             <button
               type="button"
@@ -83,6 +121,7 @@ const ModalAddSubscription = () => {
               <i className="ri-close-fill text-2xl"></i>
             </button>
           </Dialog.Close>
+          <FormErrors errors={formErrorsMessage as string[]} />
           <Dialog.Title className="text-2xl font-medium">
             Add new subscription
           </Dialog.Title>
@@ -90,14 +129,13 @@ const ModalAddSubscription = () => {
             General information
           </Dialog.Description>
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
-            <div className="mb-4 flex items-center gap-4">
-              <div className="flex w-full flex-col justify-center">
+            <div className="mb-4">
+              <div className="mb-4 flex w-full flex-col justify-center">
                 <Input<TAddModalSubscription>
                   name="name"
                   id="name"
                   label="Name"
                   register={register}
-                  errors={errors}
                   type="text"
                   required
                   placeholder="Subscription name"
@@ -123,7 +161,6 @@ const ModalAddSubscription = () => {
                 id="avatar_url"
                 label="Website"
                 register={register}
-                errors={errors}
                 type="text"
                 required
                 placeholder="google.com"
@@ -138,27 +175,29 @@ const ModalAddSubscription = () => {
             <Dialog.Description className="mb-4 mt-5 font-medium">
               Expense information
             </Dialog.Description>
-            <div className="relative">
-              <Input<TAddModalSubscription>
-                name="cost"
-                id="cost"
-                register={register}
-                errors={errors}
-                type="number"
-                step="0.01"
-                min="0"
-                label="Cost"
-                placeholder="0.00"
-              />
+            <div className="flex items-end justify-between">
+              <div className="flex w-full flex-col">
+                <Input<TAddModalSubscription>
+                  name="cost"
+                  id="cost"
+                  register={register}
+                  type="number"
+                  step="0.01"
+                  min="0"
+                  label="Cost"
+                  placeholder="0.00"
+                  isInline
+                />
+              </div>
               <SelectField
                 value={currencyController.field.value ?? ""}
                 onChange={currencyController.field.onChange}
                 id="currency"
                 name="currency"
                 options={currencies}
-                maskRight
+                bgSelect
                 hideDropDown
-                placeholder="Currency"
+                placeholder="CUR"
               />
             </div>
             <Dialog.Description className="mb-4 mt-5 font-medium">
@@ -183,9 +222,9 @@ const ModalAddSubscription = () => {
                   id="next_payment"
                   label="Next payment"
                   register={register}
-                  errors={errors}
                   type="date"
                   required
+                  min={format(new Date(), "yyyy-MM-dd")}
                   placeholder="Next billing date"
                 />
               </div>

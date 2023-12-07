@@ -3,8 +3,10 @@
 import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
-import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import useRegister from "../hooks/useRegister";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import FormErrors from "@/app/components/formElements/FormErrors";
 
 type TFormValues = {
   PasswordStep: {
@@ -33,16 +35,16 @@ function PasswordForm() {
     setFormValues(data);
     markStepAsCompleted("password");
   };
-
+  const formErrorsMessage = collectFormErrors(errors);
   return (
     <form noValidate onSubmit={handleSubmit(handleSavePassword)}>
+      <FormErrors errors={formErrorsMessage as string[]} />
       <div className="mb-5 flex flex-col gap-1">
         <Input<TFormValues>
           name="PasswordStep.password"
           id="password"
           label="Password"
           register={register}
-          errors={errors as Partial<{ PasswordStep: { password: FieldError } }>}
           type="password"
           required
         />

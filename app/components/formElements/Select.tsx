@@ -15,7 +15,7 @@ type SelectFieldProps<T> = {
   placeholder?: string;
   hideDropDown?: boolean;
   fullWidth?: boolean;
-  maskRight?: boolean;
+  bgSelect?: boolean;
 };
 
 const SELECT_FIELD_ITEM = "select-field-item-";
@@ -28,7 +28,7 @@ const SelectField = ({
   label,
   placeholder = "",
   hideDropDown = false,
-  maskRight = false,
+  bgSelect = false,
   fullWidth = false,
 }: SelectFieldProps<Option>) => {
   const handleSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
@@ -55,10 +55,7 @@ const SelectField = ({
           className={`${
             fullWidth && "w-full"
           } cursor-pointer rounded-md border border-zinc-400 bg-zinc-100 p-2 text-sm font-light text-zinc-800 outline-none placeholder:text-zinc-400  focus:ring-1 focus:ring-inset focus:ring-zinc-800 ${"appearance-none"}
-        ${
-          maskRight &&
-          "absolute bottom-0 right-0 h-[37px] rounded-md rounded-l-none bg-zinc-400 p-2"
-        }`}
+        ${bgSelect && "rounded-md rounded-l-none bg-zinc-400 p-2"}`}
         >
           {placeholder && (
             <option value="" disabled>

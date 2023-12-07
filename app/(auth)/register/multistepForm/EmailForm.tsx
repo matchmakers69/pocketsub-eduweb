@@ -4,8 +4,10 @@ import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
-import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { emailSchema } from "./schema/emailSchema";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import FormErrors from "@/app/components/formElements/FormErrors";
 
 type TFormValues = {
   EmailStep: {
@@ -35,16 +37,16 @@ function EmailForm() {
     markStepAsCompleted("email");
     goNext();
   };
-
+  const formErrorsMessage = collectFormErrors(errors);
   return (
     <form noValidate onSubmit={handleSubmit(handleSaveEmail)}>
+      <FormErrors errors={formErrorsMessage as string[]} />
       <div className="mb-5 flex flex-col gap-1">
         <Input<TFormValues>
           name="EmailStep.email"
           id="email"
           label="Email"
           register={register}
-          errors={errors as Partial<{ EmailStep: { email: FieldError } }>}
           type="email"
           required
         />

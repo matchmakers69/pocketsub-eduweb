@@ -9,6 +9,8 @@ import Button from "../buttons/Button";
 import { convertorSchema } from "./schema/convertorSchema";
 import SelectField, { Option } from "../formElements/Select";
 import { useCurrencyStoreCustomSelect } from "@/src/currencyStoreCustomSelect";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import FormErrors from "../formElements/FormErrors";
 
 type CurrencyConvertorProps = {
   options: Option[];
@@ -39,6 +41,8 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
     setTotalInGBP(totalInGBP);
   };
 
+  const formErrorsMessage = collectFormErrors(errors);
+
   return (
     <div className="rounded-xl bg-zinc-50 p-3">
       <div className="relative mx-auto my-6 h-full w-full md:h-auto md:w-5/6 lg:h-auto lg:w-4/6 ">
@@ -48,13 +52,13 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
           </h2>
 
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
+            <FormErrors errors={formErrorsMessage as string[]} />
             <div className="mb-5 flex flex-col gap-1">
               <Input<Omit<TConvertorValues, "currencyOption">>
                 name="amount"
                 id="amount"
                 label="Enter your amount you want to calculate"
                 register={register}
-                errors={errors}
                 type="number"
                 step="0.01"
                 min="0"

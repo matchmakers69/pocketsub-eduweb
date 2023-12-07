@@ -1,14 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import React, { InputHTMLAttributes } from "react";
-import {
-  UseFormRegister,
-  FieldError,
-  Path,
-  FieldValues,
-  DeepMap,
-} from "react-hook-form";
-import { ErrorMessage } from "@hookform/error-message";
-import FormErrorMessage from "../FormErrorMessage";
+import { Path, FieldValues } from "react-hook-form";
 import { DetailedHTMLProps } from "react";
 
 type InputType =
@@ -36,7 +27,6 @@ type InputProps = {
 type FormInputProps<T extends FieldValues> = {
   name: Path<T>;
   register: any;
-  errors?: Partial<DeepMap<T, FieldError>>;
   disabled?: boolean;
   hasCurrencyPrefix?: boolean;
   required?: boolean;
@@ -46,6 +36,7 @@ type FormInputProps<T extends FieldValues> = {
   step?: string;
   mask?: boolean;
   maskText?: string;
+  isInline?: boolean;
 } & Omit<InputProps, "name">;
 
 const Input = <T extends Record<string, unknown>>({
@@ -59,11 +50,11 @@ const Input = <T extends Record<string, unknown>>({
   maskText = "",
   required,
   register,
-  errors,
   iconName,
   min = "",
   placeholder = "Enter something",
   step = "",
+  isInline = false,
 }: FormInputProps<T>): JSX.Element => {
   const isCheckbox = type === "checkbox";
 
@@ -109,8 +100,8 @@ const Input = <T extends Record<string, unknown>>({
             className={`w-full  rounded-md border border-zinc-400 bg-zinc-100 p-2 text-sm font-light text-zinc-800 outline-none placeholder:text-zinc-400  focus:ring-1 focus:ring-inset focus:ring-zinc-800 ${
               disabled ? "cursor-not-allowed opacity-70" : ""
             } ${hasCurrencyPrefix ? "pl-9" : "pl-2"} ${
-              mask ? "pl-20" : "pl-2"
-            }`}
+              isInline ? "rounded-r-none" : "rounded-md"
+            } ${mask ? "pl-20" : "pl-2"}`}
             disabled={disabled}
             type={type}
             id={id}
@@ -126,14 +117,6 @@ const Input = <T extends Record<string, unknown>>({
           )}
         </div>
       )}
-
-      <ErrorMessage
-        errors={errors}
-        name={name as any}
-        render={({ message }) => (
-          <FormErrorMessage className="mt-1">{message}</FormErrorMessage>
-        )}
-      />
     </>
   );
 };

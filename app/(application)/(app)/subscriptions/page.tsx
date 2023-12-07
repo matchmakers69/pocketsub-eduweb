@@ -5,9 +5,17 @@ import Image from "next/image";
 import { format } from "date-fns";
 import StatsList from "@/app/components/subscriptions/StatsList";
 import { PAYMENT_STATUS } from "@prisma/client";
+import getCurrentUser from "@/app/actions/getCurrentUser";
 
 export default async function SubscriptionsPage() {
-  const data = await getSubscriptionsData("desc");
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    return;
+  }
+  const data = await getSubscriptionsData(currentUser?.id, {
+    key: "next_payment_date",
+    value: "desc",
+  });
 
   if (!data) return null;
 

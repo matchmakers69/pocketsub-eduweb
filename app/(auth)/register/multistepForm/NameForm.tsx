@@ -4,8 +4,10 @@ import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useRegistrationFormContext } from "@/app/context/RegistrationFormContext";
-import { FieldError, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { nameSchema } from "./schema/nameSchema";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import FormErrors from "@/app/components/formElements/FormErrors";
 
 type TFormValues = {
   UsernameStep: {
@@ -36,15 +38,16 @@ function NameForm() {
     goNext();
   };
 
+  const formErrorsMessage = collectFormErrors(errors);
   return (
     <form noValidate onSubmit={handleSubmit(handleSaveName)}>
+      <FormErrors errors={formErrorsMessage as string[]} />
       <div className="mb-5 flex flex-col gap-1">
         <Input<TFormValues>
           name="UsernameStep.name"
           id="name"
           label="Name"
           register={register}
-          errors={errors as Partial<{ UsernameStep: { name: FieldError } }>}
           type="text"
           required
         />

@@ -3,6 +3,8 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import Input from "@/app/components/formElements/Input";
 import Button from "@/app/components/buttons/Button";
 import useCreateTodo from "./hooks/useCreateTodo";
+import { collectFormErrors } from "@/app/utils/collectFormErrors";
+import FormErrors from "../formElements/FormErrors";
 
 type TTodoFormValues = {
   id: string;
@@ -26,16 +28,18 @@ function CreateTodoForm() {
   const handleCreateTodo: SubmitHandler<TTodoFormValues> = async (newTodo) => {
     createTodo(newTodo);
   };
+
+  const formErrorsMessage = collectFormErrors(errors);
   return (
     <>
       <form noValidate onSubmit={handleSubmit(handleCreateTodo)}>
+        <FormErrors errors={formErrorsMessage as string[]} />
         <div className="mb-5 flex flex-col gap-1">
           <Input<TTodoFormValues>
             name="title"
             id="title"
             label="Title"
             register={register}
-            errors={errors}
             type="text"
             required
           />

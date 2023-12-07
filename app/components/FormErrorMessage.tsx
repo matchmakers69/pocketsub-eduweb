@@ -9,7 +9,7 @@ function FormErrorMessage({ className, children }: FormErrorMessageProps) {
   return (
     <p
       className={classNames(
-        "block text-left font-serif text-sm text-red-600",
+        "text-left font-serif text-sm text-red-600",
         className,
       )}
     >
