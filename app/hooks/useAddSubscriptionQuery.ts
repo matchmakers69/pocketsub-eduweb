@@ -1,11 +1,11 @@
+import { createSubscription } from "@/service/api/subscriptionsApi";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
-import { addSubscription } from "../actions/addSubscription";
 
 export const useAddSubscriptionQuery = () => {
   const client = useQueryClient();
   const mutation = useMutation({
-    mutationFn: addSubscription,
+    mutationFn: createSubscription,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ["dashboardData"] });
     },

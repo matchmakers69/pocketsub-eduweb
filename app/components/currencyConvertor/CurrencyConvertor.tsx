@@ -54,7 +54,7 @@ const CurrencyConvertor = ({ options }: CurrencyConvertorProps) => {
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
             <FormErrors errors={formErrorsMessage as string[]} />
             <div className="mb-5 flex flex-col gap-1">
-              <Input<Omit<TConvertorValues, "currencyOption">>
+              <Input<TConvertorValues>
                 name="amount"
                 id="amount"
                 label="Enter your amount you want to calculate"

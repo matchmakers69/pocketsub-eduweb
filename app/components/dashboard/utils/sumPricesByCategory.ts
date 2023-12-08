@@ -11,7 +11,9 @@ const getCategoryWithTotalSum = (
     (acc: Record<string, number>, currentValue) => {
       const { price, category, currency } = currentValue;
       const categoryPriceWithRateExchange =
-        currency in exchangeRate ? price / exchangeRate[currency] : price;
+        currency in exchangeRate
+          ? price / Number(exchangeRate[currency])
+          : price;
 
       if (category in acc) {
         acc[category] += categoryPriceWithRateExchange;

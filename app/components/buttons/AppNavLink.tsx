@@ -7,7 +7,7 @@ import { UrlObject } from "url";
 type AppNavLink = {
   iconName: string;
   text: string;
-} & LinkProps;
+} & LinkProps<unknown>;
 
 function AppNavLink({ iconName, text, href }: AppNavLink) {
   // sprawdzenie url - na podstawie tego beda odczytywqne style

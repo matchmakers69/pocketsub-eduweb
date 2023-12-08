@@ -28,7 +28,7 @@ function UpdateTodoForm({
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid, isSubmitting },
+    formState: { isDirty, isValid, isSubmitting },
   } = useForm<TodoFormData>({
     mode: "onChange",
     defaultValues: {
@@ -60,14 +60,12 @@ function UpdateTodoForm({
         type="text"
         register={register}
         required
-        errors={errors}
       />
       <Input
         id={`select-${id}`}
         name="complete"
         type="checkbox"
         register={register}
-        errors={errors}
       />
       <Button outline onClick={onCancel} label="Cancel" type="button" small />
       <Button

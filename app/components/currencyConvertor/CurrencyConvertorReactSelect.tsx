@@ -26,7 +26,7 @@ const CurrencyConvertorReactSelect = ({
     register,
     control,
     getValues,
-    formState: { errors, isDirty, isValid },
+    formState: { isDirty, isValid },
   } = useForm<TConvertorValues>({
     mode: "onChange",
     resolver: yupResolver(convertorSchemaReactSelect),
@@ -59,12 +59,11 @@ const CurrencyConvertorReactSelect = ({
 
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="mb-5 flex flex-col gap-1">
-              <Input<Omit<TConvertorValues, "currencyOption">>
+              <Input<TConvertorValues>
                 name="amount"
                 id="amount"
                 label="Enter your amount you want to calculate"
                 register={register}
-                errors={errors}
                 type="number"
                 step="0.01"
                 min="0"

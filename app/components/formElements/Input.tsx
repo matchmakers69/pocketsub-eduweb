@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from "react";
-import { Path, FieldValues } from "react-hook-form";
+import { Path, FieldValues, UseFormRegister } from "react-hook-form";
 import { DetailedHTMLProps } from "react";
 
 type InputType =
@@ -26,7 +26,7 @@ type InputProps = {
 
 type FormInputProps<T extends FieldValues> = {
   name: Path<T>;
-  register: any;
+  register: UseFormRegister<T>;
   disabled?: boolean;
   hasCurrencyPrefix?: boolean;
   required?: boolean;
@@ -37,7 +37,7 @@ type FormInputProps<T extends FieldValues> = {
   mask?: boolean;
   maskText?: string;
   isInline?: boolean;
-} & Omit<InputProps, "name">;
+} & InputProps;
 
 const Input = <T extends Record<string, unknown>>({
   id,

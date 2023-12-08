@@ -27,7 +27,7 @@ const categoryOptions = [
 const currencies: SUBSCRIPTION_CURRENCY[] = ["EUR", "GBP", "PLN", "USD"];
 const billingPeriod: SUBSCRIPTION_BILLING_PERIOD[] = ["MONTHLY", "YEARLY"];
 
-export type TAddModalSubscription = Yup.InferType<
+export type TAddSubscriptionValue = Yup.InferType<
   typeof subscriptionValidationSchema
 >;
 
@@ -42,7 +42,7 @@ const ModalAddSubscription = () => {
     register,
     control,
     formState: { errors, isDirty, isValid },
-  } = useForm<TAddModalSubscription>({
+  } = useForm<TAddSubscriptionValue>({
     mode: "onChange",
     resolver: yupResolver(subscriptionValidationSchema),
     defaultValues: {
@@ -71,7 +71,7 @@ const ModalAddSubscription = () => {
     defaultValue: "",
   });
 
-  const handleFormSubmit: SubmitHandler<TAddModalSubscription> = async (
+  const handleFormSubmit: SubmitHandler<TAddSubscriptionValue> = async (
     data,
   ) => {
     const {
@@ -131,7 +131,7 @@ const ModalAddSubscription = () => {
           <form noValidate onSubmit={handleSubmit(handleFormSubmit)}>
             <div className="mb-4">
               <div className="mb-4 flex w-full flex-col justify-center">
-                <Input<TAddModalSubscription>
+                <Input<TAddSubscriptionValue>
                   name="name"
                   id="name"
                   label="Name"
@@ -156,7 +156,7 @@ const ModalAddSubscription = () => {
             </div>
 
             <div className="relative">
-              <Input<TAddModalSubscription>
+              <Input<TAddSubscriptionValue>
                 name="avatar_url"
                 id="avatar_url"
                 label="Website"
@@ -177,7 +177,7 @@ const ModalAddSubscription = () => {
             </Dialog.Description>
             <div className="flex items-end justify-between">
               <div className="flex w-full flex-col">
-                <Input<TAddModalSubscription>
+                <Input<TAddSubscriptionValue>
                   name="cost"
                   id="cost"
                   register={register}
@@ -217,7 +217,7 @@ const ModalAddSubscription = () => {
                 />
               </div>
               <div className="flex w-full flex-col justify-center">
-                <Input<TAddModalSubscription>
+                <Input<TAddSubscriptionValue>
                   name="next_payment"
                   id="next_payment"
                   label="Next payment"
