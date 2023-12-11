@@ -6,6 +6,7 @@ import Avatar from "./Avatar";
 import { SafeUser } from "@/service/api/types";
 import { useRouter } from "next/navigation";
 import { signOut } from "next-auth/react";
+import MenuItemLink from "./MenuItemLink";
 
 type PartialSafeUser = Partial<SafeUser>;
 
@@ -45,14 +46,12 @@ function UserMenu({ currentUser }: UserMenuProps) {
           <div className="flex cursor-pointer flex-col">
             {currentUser ? (
               <>
-                <MenuItem
-                  onClick={() => router.push("/dashboard")}
-                  label="Dashboard"
-                />
-                <MenuItem
-                  onClick={() => router.push("/profile")}
-                  label="Profile"
-                />
+                <MenuItemLink text="Dashboard" href="/dashboard" />
+                <MenuItemLink text="Profile" href="/profile" />
+                <MenuItemLink text="Subscriptions" href="/subscriptions" />
+                <MenuItemLink text="Todos" href="/todos" />
+                <MenuItemLink text="Blog" href="/blog" />
+
                 <hr />
                 <MenuItem onClick={() => signOut()} label="Logout" />
               </>

@@ -50,6 +50,7 @@ export default async function ApplicationLayout({
               iconName="calendar-todo"
               text={"Todos"}
             />
+            <AppNavLink href={"/blog"} iconName="article" text={"Blog"} />
           </nav>
         </div>
         <AppUserButton username={user?.name ?? "Logged out"} />

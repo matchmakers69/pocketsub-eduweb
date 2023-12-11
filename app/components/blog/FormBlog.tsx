@@ -16,7 +16,7 @@ const tagOptions: Array<string> = ["javascript", "php", "java"];
 export type TAddBlogPostValue = Yup.InferType<typeof blogValidationSchema>;
 
 type FormBlogProps = {
-  submit: any;
+  submit: (data: TAddBlogPostValue) => void;
 };
 
 function FormBlog({ submit }: FormBlogProps) {
@@ -40,11 +40,6 @@ function FormBlog({ submit }: FormBlogProps) {
     name: "tag",
     control,
   });
-
-  //   const handleFormSubmit: SubmitHandler<TAddBlogPostValue> = (data) => {
-  //     console.log(data);
-  //     reset();
-  //   };
 
   const formErrorsMessage = collectFormErrors(errors);
   return (

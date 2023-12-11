@@ -1,13 +1,17 @@
 "use client";
 import FormBlog from "@/app/components/blog/FormBlog";
 import { TBlogPostValue } from "@/app/components/blog/types/blogPostValues";
-import React from "react";
+import React, { useCallback } from "react";
 import { SubmitHandler } from "react-hook-form";
 
 const CreateArticle = () => {
-  const handleFormSubmit: SubmitHandler<TBlogPostValue> = (data) => {
-    console.log(data);
-  };
+  const handleFormSubmit: SubmitHandler<TBlogPostValue> = useCallback(
+    (data) => {
+      console.log(data);
+    },
+    [],
+  );
+
   return (
     <section className="mx-auto max-w-7xl py-6">
       <h1 className="text-2xl font-semibold">Create article</h1>
