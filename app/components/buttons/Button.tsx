@@ -55,7 +55,11 @@ const Button = forwardRef(
         type={type}
       >
         {iconName && <i className={`ri-${iconName}`} />}
-        {label}
+        {iconName ? (
+          <span className="ml-1.5 inline-block">{label}</span>
+        ) : (
+          label
+        )}
         {children}
       </button>
     );

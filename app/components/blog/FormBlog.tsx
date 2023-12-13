@@ -2,7 +2,7 @@
 import React from "react";
 import * as Yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useController, useForm } from "react-hook-form";
+import { SubmitHandler, useController, useForm } from "react-hook-form";
 import { blogValidationSchema } from "./validationSchema";
 import { collectFormErrors } from "@/app/utils/collectFormErrors";
 import FormErrors from "../formElements/FormErrors";
@@ -16,10 +16,12 @@ const tagOptions: Array<string> = ["javascript", "php", "java"];
 export type TAddBlogPostValue = Yup.InferType<typeof blogValidationSchema>;
 
 type FormBlogProps = {
-  submit: (data: TAddBlogPostValue) => void;
+  //submit: (data: TAddBlogPostValue) => void;
+  submit: SubmitHandler<TAddBlogPostValue>;
+  isEditing?: boolean;
 };
 
-function FormBlog({ submit }: FormBlogProps) {
+function FormBlog({ submit, isEditing = false }: FormBlogProps) {
   const {
     register,
     control,
@@ -84,7 +86,7 @@ function FormBlog({ submit }: FormBlogProps) {
             disabled={!isDirty || !isValid}
             fullWidth
             type="submit"
-            label="Add article"
+            label={isEditing ? "Update article" : "Create article"}
           />
         </div>
       </form>
