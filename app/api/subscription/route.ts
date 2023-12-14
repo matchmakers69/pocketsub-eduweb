@@ -7,11 +7,11 @@ export async function POST(req: Request) {
     name,
     category,
     avatar_url,
-    next_payment,
+    next_payment_date,
     price,
     billing_period,
     currency,
-    userId,
+    ownerId,
   } = await req.json();
 
   await prisma.subscription.create({
@@ -19,16 +19,16 @@ export async function POST(req: Request) {
       name,
       category,
       avatar_url,
-      next_payment_date: new Date(next_payment),
+      next_payment_date: new Date(next_payment_date),
       price,
       start_date: new Date(),
       billing_period: billing_period as SUBSCRIPTION_BILLING_PERIOD,
       currency,
-      ownerId: userId!,
+      ownerId: ownerId!,
       payments: {
         create: {
           amount: price,
-          due_date: new Date(next_payment),
+          due_date: new Date(next_payment_date),
           status: PAYMENT_STATUS.NOT_PAID,
         },
       },

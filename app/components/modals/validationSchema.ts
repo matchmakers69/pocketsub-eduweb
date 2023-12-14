@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { SUBSCRIPTION_BILLING_PERIOD } from "@prisma/client";
 
 export const subscriptionValidationSchema = yup.object({
   name: yup.string().required("Name is required"),
@@ -31,6 +32,9 @@ export const subscriptionValidationSchema = yup.object({
       /((https?):\/\/)?(www.)?[a-z0-9]+(\.[a-z]{2,}){1,3}(#?\/?[a-zA-Z0-9#]+)*\/?(\?[a-zA-Z0-9-_]+=[a-zA-Z0-9-%]+&?)?$/,
       "Enter correct url!",
     ),
-  billing_period: yup.string(),
+  billing_period: yup
+    .string()
+    .oneOf(Object.values(SUBSCRIPTION_BILLING_PERIOD))
+    .required("Select"),
   next_payment: yup.date(),
 });

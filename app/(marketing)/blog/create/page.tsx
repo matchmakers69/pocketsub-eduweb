@@ -1,5 +1,6 @@
 "use client";
 import FormBlog from "@/app/components/blog/FormBlog";
+import { useAddBlogPostQuery } from "@/app/components/blog/hooks/useAddBlogPostQuery";
 import { useFetchTagsQuery } from "@/app/components/blog/hooks/useFetchTagsQuery";
 import { TBlogPostValue } from "@/app/components/blog/types/blogPostValues";
 import BackButton from "@/app/components/buttons/BackButton";
@@ -8,11 +9,16 @@ import { SubmitHandler } from "react-hook-form";
 
 const CreateArticle = () => {
   const { isLoading, tags = [] } = useFetchTagsQuery();
+  const { mutation } = useAddBlogPostQuery();
   const handleCreateArticleSubmit: SubmitHandler<TBlogPostValue> = useCallback(
     (data) => {
-      console.log(data);
+      mutation.mutate({
+        title: data.title,
+        content: data.description,
+        tagId: data.tag,
+      });
     },
-    [],
+    [mutation],
   );
 
   if (isLoading) return <div>Tags are loading...</div>;

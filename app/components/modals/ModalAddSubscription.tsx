@@ -62,7 +62,6 @@ const ModalAddSubscription = () => {
   const billingPeriodController = useController({
     control,
     name: "billing_period",
-    defaultValue: "",
   });
 
   const currencyController = useController({
@@ -74,25 +73,16 @@ const ModalAddSubscription = () => {
   const handleFormSubmit: SubmitHandler<TAddSubscriptionValue> = async (
     data,
   ) => {
-    const {
-      next_payment,
-      name,
-      category,
-      billing_period,
-      cost,
-      currency,
-      avatar_url,
-    } = data;
-    if (next_payment && billing_period && cost && avatar_url && user) {
+    if (user && data.next_payment && data.cost && data.avatar_url) {
       mutation.mutate({
-        name,
-        next_payment,
-        category,
-        price: cost,
-        avatar_url,
-        billing_period,
-        currency: currency as SUBSCRIPTION_CURRENCY,
-        userId: user?.id,
+        name: data.name,
+        price: data.cost,
+        currency: data.currency as SUBSCRIPTION_CURRENCY,
+        billing_period: data.billing_period,
+        next_payment_date: data.next_payment,
+        category: data.category,
+        avatar_url: data.avatar_url,
+        ownerId: user.id,
       });
     }
 

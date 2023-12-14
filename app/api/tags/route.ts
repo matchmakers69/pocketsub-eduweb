@@ -7,7 +7,7 @@ export async function GET() {
     return NextResponse.json(tags, { status: 200 });
   } catch (error) {
     return NextResponse.json(
-      { messahe: "could not fetch tags" },
+      { message: "could not fetch tags" },
       { status: 500 },
     );
   }
