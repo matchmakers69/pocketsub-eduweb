@@ -13,7 +13,7 @@ export default async function getSubscriptionsData(
     //   return;
     // }
 
-    const res = prisma.subscription.findMany({
+    const res = await prisma.subscription.findMany({
       where: { ownerId: userId },
       include: { payments: true },
       orderBy: { [`${orderBy.key}`]: orderBy.value },

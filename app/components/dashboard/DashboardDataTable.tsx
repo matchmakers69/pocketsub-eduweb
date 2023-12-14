@@ -6,6 +6,7 @@ import Image from "next/image";
 import { useSession } from "next-auth/react";
 import { useQuery } from "@tanstack/react-query";
 import getSubscriptionsData from "@/app/actions/getSubscriptionsData";
+import { queryKeys } from "@/app/constants/queryKeys";
 
 type DashboardDataTableProps = {
   initialData: (Subscription & {
@@ -19,7 +20,7 @@ const DashboardDataTable = ({ initialData }: DashboardDataTableProps) => {
   const userId = user?.id;
 
   const { data: subscriptionsData, isLoading } = useQuery({
-    queryKey: ["dashboardData"],
+    queryKey: [queryKeys.dashboardData],
     initialData,
     queryFn: () =>
       getSubscriptionsData(userId!, { key: "next_payment_date", value: "asc" }),

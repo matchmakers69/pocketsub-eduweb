@@ -11,17 +11,16 @@ import Button from "../buttons/Button";
 import TextArea from "../formElements/TextArea";
 import SelectField, { Option } from "../formElements/Select";
 
-const tagOptions: Array<string> = ["javascript", "php", "java"];
-
 export type TAddBlogPostValue = Yup.InferType<typeof blogValidationSchema>;
 
 type FormBlogProps = {
   //submit: (data: TAddBlogPostValue) => void;
   submit: SubmitHandler<TAddBlogPostValue>;
   isEditing?: boolean;
+  tags: Option[];
 };
 
-function FormBlog({ submit, isEditing = false }: FormBlogProps) {
+function FormBlog({ submit, isEditing = false, tags }: FormBlogProps) {
   const {
     register,
     control,
@@ -34,7 +33,7 @@ function FormBlog({ submit, isEditing = false }: FormBlogProps) {
     defaultValues: {
       title: "",
       description: "",
-      tag: "javascript",
+      tag: "",
     },
   });
 
@@ -44,6 +43,7 @@ function FormBlog({ submit, isEditing = false }: FormBlogProps) {
   });
 
   const formErrorsMessage = collectFormErrors(errors);
+
   return (
     <>
       <FormErrors errors={formErrorsMessage as string[]} />
@@ -78,7 +78,7 @@ function FormBlog({ submit, isEditing = false }: FormBlogProps) {
             id="tag"
             name="tag"
             placeholder="Select tags"
-            options={tagOptions}
+            options={tags ?? []}
           />
         </div>
         <div className="mb-4">

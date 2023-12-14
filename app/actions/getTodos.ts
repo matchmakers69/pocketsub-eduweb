@@ -4,7 +4,7 @@ export default async function getTodos() {
   try {
     const res = prisma.todo.findMany();
     return res;
-  } catch (error: any) {
-    throw new Error(error);
+  } catch (error) {
+    throw new Error("Cannot fetch todos");
   }
 }
