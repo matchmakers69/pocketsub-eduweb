@@ -19,6 +19,12 @@ export const deleteBlogArticle = async (id: string) => {
   return res;
 };
 
+export const updateBlogArticle = async (id: string, newArticle: BlogPost) => {
+  const res = await clientApi.patch(`/blog/${id}`, newArticle);
+
+  return res;
+};
+
 export const fetchSinglePost = async (id: string) => {
   const res = await clientApi.get(`/blog/${id}`);
 

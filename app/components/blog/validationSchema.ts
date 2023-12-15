@@ -11,5 +11,5 @@ export const blogValidationSchema = yup.object().shape({
     .max(500, "Maximum 500 characters")
     .min(10, "Minimum 10 characters")
     .required("Description is required"),
-  tag: yup.string().required("Select"),
+  tagId: yup.string().required("Select"),
 });

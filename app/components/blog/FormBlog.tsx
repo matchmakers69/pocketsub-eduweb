@@ -20,6 +20,7 @@ type FormBlogProps = {
   isEditing?: boolean;
   tags: Option[];
   initialValues?: Post;
+  isLoadingSubmit?: boolean;
 };
 
 function FormBlog({
@@ -27,6 +28,7 @@ function FormBlog({
   isEditing = false,
   tags,
   initialValues,
+  isLoadingSubmit,
 }: FormBlogProps) {
   const {
     register,
@@ -38,14 +40,14 @@ function FormBlog({
     mode: "onChange",
     resolver: yupResolver(blogValidationSchema),
     defaultValues: {
-      title: initialValues?.title ?? "",
-      content: initialValues?.content ?? "",
-      tag: "",
+      title: isEditing ? initialValues?.title : "",
+      content: isEditing ? initialValues?.content : "",
+      tagId: isEditing ? initialValues?.tagId : "",
     },
   });
 
   const { field: tagField } = useController({
-    name: "tag",
+    name: "tagId",
     control,
   });
 
@@ -93,7 +95,13 @@ function FormBlog({
             disabled={!isDirty || !isValid}
             fullWidth
             type="submit"
-            label={isEditing ? "Update article" : "Create article"}
+            label={
+              isLoadingSubmit
+                ? "Loading..."
+                : isEditing
+                ? "Update article"
+                : "Create article"
+            }
           />
         </div>
       </form>

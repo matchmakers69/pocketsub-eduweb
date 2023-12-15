@@ -15,7 +15,7 @@ const CreateArticle = () => {
       mutation.mutate({
         title: data.title,
         content: data.content,
-        tagId: data.tag,
+        tagId: data.tagId,
       });
     },
     [mutation],
