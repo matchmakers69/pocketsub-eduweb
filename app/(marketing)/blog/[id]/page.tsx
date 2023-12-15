@@ -1,6 +1,5 @@
 import getBlogArticle from "@/app/actions/getSingleBlogArticle";
 import ButtonAction from "@/app/components/blog/ButtonAction";
-import ButtonCreate from "@/app/components/blog/ButtonCreate";
 import BackButton from "@/app/components/buttons/BackButton";
 
 type ArticleDetailsProps = {
@@ -14,9 +13,8 @@ const ArticleDetails = async ({ params }: ArticleDetailsProps) => {
   if (!article) return;
   return (
     <section className="mx-auto max-w-7xl py-6">
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex items-center justify-end">
         <BackButton />
-        <ButtonCreate />
       </div>
       <h1 className="text-2xl font-semibold">Article details</h1>
       <div className="mb-5 mt-10">
@@ -24,7 +22,7 @@ const ArticleDetails = async ({ params }: ArticleDetailsProps) => {
         <p className="mb-3 text-slate-700">{article.content}</p>
         <div className="badge badge-neutral">{article.tag.name}</div>
       </div>
-      <ButtonAction />
+      <ButtonAction id={params.id} />
     </section>
   );
 };

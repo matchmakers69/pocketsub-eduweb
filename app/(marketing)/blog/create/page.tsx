@@ -14,7 +14,7 @@ const CreateArticle = () => {
     (data) => {
       mutation.mutate({
         title: data.title,
-        content: data.description,
+        content: data.content,
         tagId: data.tag,
       });
     },
@@ -25,7 +25,7 @@ const CreateArticle = () => {
 
   return (
     <section className="mx-auto max-w-7xl py-6">
-      <div className="mb-4">
+      <div className="mb-4 flex justify-end">
         <BackButton />
       </div>
       <h1 className="text-2xl font-semibold">

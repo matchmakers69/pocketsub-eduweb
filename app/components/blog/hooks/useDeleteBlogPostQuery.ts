@@ -1,14 +1,14 @@
 import { queryKeys } from "@/app/constants/queryKeys";
-import { createBlogArticle } from "@/service/api/blogApi";
+import { deleteBlogArticle } from "@/service/api/blogApi";
 import { useRouter } from "next/navigation";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 
-export const useAddBlogPostQuery = () => {
+export const useDeleteBlogPostQuery = () => {
   const router = useRouter();
   const client = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: createBlogArticle,
+  const { mutate: deletePost, isPending } = useMutation({
+    mutationFn: deleteBlogArticle,
     onSuccess: () => {
       client.invalidateQueries({ queryKey: [queryKeys.blogPosts] });
       router.push("/blog");
@@ -17,12 +17,13 @@ export const useAddBlogPostQuery = () => {
     onError: (error) => {
       console.error(error);
       if (error) {
-        toast.error("New subscription cannot be added!");
+        toast.error("New subscription cannot be deleted!");
       }
     },
   });
 
   return {
-    mutation,
+    deletePost,
+    isPending,
   };
 };

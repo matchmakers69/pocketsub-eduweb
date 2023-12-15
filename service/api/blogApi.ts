@@ -12,3 +12,15 @@ export const createBlogArticle = async (newArticle: BlogPost) => {
 
   return res;
 };
+
+export const deleteBlogArticle = async (id: string) => {
+  const res = await clientApi.delete(`/blog/${id}`);
+
+  return res;
+};
+
+export const fetchSinglePost = async (id: string) => {
+  const res = await clientApi.get(`/blog/${id}`);
+
+  return res.data;
+};

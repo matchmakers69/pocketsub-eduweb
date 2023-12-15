@@ -3,7 +3,8 @@ import { create } from "zustand";
 type Toast =
   | "currencyRateSuccess"
   | "credentailsSuccess"
-  | "tagsBlogPostSuccess";
+  | "tagsBlogPostSuccess"
+  | "singleBlogPostSuccess";
 
 type FlagsState = {
   toast: Record<Toast, boolean>;
@@ -15,6 +16,7 @@ export const useFlagsStore = create<FlagsState>((set) => ({
     currencyRateSuccess: false,
     credentailsSuccess: false,
     tagsBlogPostSuccess: false,
+    singleBlogPostSuccess: false,
   },
   setToast: (name, shown) =>
     set((state) => ({

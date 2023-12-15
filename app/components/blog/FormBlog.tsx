@@ -10,6 +10,7 @@ import Input from "../formElements/Input";
 import Button from "../buttons/Button";
 import TextArea from "../formElements/TextArea";
 import SelectField, { Option } from "../formElements/Select";
+import { Post } from "@prisma/client";
 
 export type TAddBlogPostValue = Yup.InferType<typeof blogValidationSchema>;
 
@@ -18,9 +19,15 @@ type FormBlogProps = {
   submit: SubmitHandler<TAddBlogPostValue>;
   isEditing?: boolean;
   tags: Option[];
+  initialValues?: Post;
 };
 
-function FormBlog({ submit, isEditing = false, tags }: FormBlogProps) {
+function FormBlog({
+  submit,
+  isEditing = false,
+  tags,
+  initialValues,
+}: FormBlogProps) {
   const {
     register,
     control,
@@ -31,8 +38,8 @@ function FormBlog({ submit, isEditing = false, tags }: FormBlogProps) {
     mode: "onChange",
     resolver: yupResolver(blogValidationSchema),
     defaultValues: {
-      title: "",
-      description: "",
+      title: initialValues?.title ?? "",
+      content: initialValues?.content ?? "",
       tag: "",
     },
   });
@@ -61,7 +68,7 @@ function FormBlog({ submit, isEditing = false, tags }: FormBlogProps) {
         </div>
         <div className="mb-4">
           <TextArea
-            name="description"
+            name="content"
             register={register}
             required
             placeholder="Article content"

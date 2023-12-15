@@ -28,14 +28,14 @@ export const useFetchTagsQuery = () => {
 
   useEffect(() => {
     if (error) {
-      toast.error("Error fetching currency options");
+      toast.error("Error fetching blog post tags");
     }
   }, [error]);
 
   useEffect(() => {
     if (tags) {
       if (!flagToastShown) {
-        toast.success("Fetched data successfully");
+        toast.success("Fetched tags successfully");
         setToast("tagsBlogPostSuccess", true);
       }
     }
