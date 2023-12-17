@@ -10,6 +10,8 @@ const FormErrors = ({ errors }: FormErrorsProps) => {
   useEffect(() => {
     if (errorSummaryRef.current) {
       errorSummaryRef.current.scrollIntoView({ behavior: "smooth" });
+
+      window.scrollBy(0, -40);
     }
   }, [errors]);
 
